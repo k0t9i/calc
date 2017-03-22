@@ -106,6 +106,10 @@ class TokenizerTest extends Unit
         $this->expectExceptionMessage('token "~"');
         $this->tokenizer->parse('13~+17');
     }
+    public function testLiteral()
+    {
+        $this->assertTrue($this->tokenizer->parse('sin(12) + 1') === ['sin', '(', '12', ')', '+', '1']);
+    }
 
     public function testComplex()
     {

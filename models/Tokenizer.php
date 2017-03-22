@@ -12,6 +12,7 @@ namespace app\models;
 class Tokenizer
 {
     const TOKEN_NUMBER = '[0-9]+';
+    const TOKEN_LITERAL = '[a-z][a-z0-9]*';
     const TOKEN_PLUS = '\+';
     const TOKEN_MINUS = '\-';
     const TOKEN_MULTIPLY = '\*';
@@ -26,6 +27,7 @@ class Tokenizer
      */
     private static $_tokens = [
         self::TOKEN_NUMBER,
+        self::TOKEN_LITERAL,
         self::TOKEN_PLUS,
         self::TOKEN_MINUS,
         self::TOKEN_MULTIPLY,
@@ -104,7 +106,7 @@ class Tokenizer
         if ($lengthBefore == strlen($string)) {
             throw new UnknownTokenException('Unknown token "' . $string[0] . '" at position ' . ($initLength - $lengthBefore + 1));
         }
-        
+
         return false;
     }
 }
