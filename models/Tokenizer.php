@@ -69,7 +69,7 @@ class Tokenizer
      */
     public function getFirstToken(&$string, $tokenRegExp)
     {
-        $tokenRegExp = '/^' . $tokenRegExp . '/';
+        $tokenRegExp = '/^' . $tokenRegExp . '/i';
         $matches = [];
         if (preg_match($tokenRegExp, $string, $matches)) {
             $string = preg_replace($tokenRegExp, '', $string);
