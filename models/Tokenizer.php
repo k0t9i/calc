@@ -11,68 +11,68 @@ namespace app\models;
  */
 class Tokenizer
 {
-    const TOKEN_NUMBER = '[0-9]+';
-    const TOKEN_LITERAL = '[a-z][a-z0-9]*';
-    const TOKEN_PLUS = '\+';
-    const TOKEN_MINUS = '\-';
-    const TOKEN_MULTIPLY = '\*';
-    const TOKEN_DIVIDE = '\/';
-    const TOKEN_LEFT_PARENTHESIS = '\(';
-    const TOKEN_RIGHT_PARENTHESIS = '\)';
+    const LEXEME_NUMBER = '[0-9]+';
+    const LEXEME_LITERAL = '[a-z][a-z0-9]*';
+    const LEXEME_PLUS = '\+';
+    const LEXEME_MINUS = '\-';
+    const LEXEME_MULTIPLY = '\*';
+    const LEXEME_DIVIDE = '\/';
+    const LEXEME_LEFT_PARENTHESIS = '\(';
+    const LEXEME_RIGHT_PARENTHESIS = '\)';
 
     /**
-     * List of existing tokens
+     * List of existing lexemes
      *
      * @var array
      */
-    private static $_tokens = [
-        self::TOKEN_NUMBER,
-        self::TOKEN_LITERAL,
-        self::TOKEN_PLUS,
-        self::TOKEN_MINUS,
-        self::TOKEN_MULTIPLY,
-        self::TOKEN_DIVIDE,
-        self::TOKEN_LEFT_PARENTHESIS,
-        self::TOKEN_RIGHT_PARENTHESIS
+    private static $_lexemes = [
+        self::LEXEME_NUMBER,
+        self::LEXEME_LITERAL,
+        self::LEXEME_PLUS,
+        self::LEXEME_MINUS,
+        self::LEXEME_MULTIPLY,
+        self::LEXEME_DIVIDE,
+        self::LEXEME_LEFT_PARENTHESIS,
+        self::LEXEME_RIGHT_PARENTHESIS
     ];
 
     /**
-     * Parse input string into list of tokens
+     * Parse input string into list of lexemes
      *
      * @param string $string Input string
-     * @return array List of tokens from input string
+     * @return array List of lexemes from input string
      */
-    public function parse($string)
+    public function parseLexemes($string)
     {
         $input = $string;
         $result = [];
 
         $initLength = strlen($input);
         while (strlen($input) > 0) {
-            $token = $this->searchTokens($input, $initLength);
-            if ($token === false) {
+            $lexeme = $this->searchLexemes($input, $initLength);
+            if ($lexeme === false) {
                 break;
             }
-            $result[] = $token;
+            $result[] = $lexeme;
         }
 
         return $result;
     }
 
     /**
-     * Extracts first token from string and return it, or return false if token not found
+     * Extracts first lexeme from string and return it, or return false if lexeme not found
      * Changes input string
      *
      * @param string $string Input string
-     * @param string $tokenRegExp Token regular expression
-     * @return bool|mixed Token or false if token not dound
+     * @param string $lexemeRegExp Lexeme regular expression
+     * @return bool|mixed Lexeme or false if lexeme not dound
      */
-    public function getFirstToken(&$string, $tokenRegExp)
+    public function getFirstLexeme(&$string, $lexemeRegExp)
     {
-        $tokenRegExp = '/^' . $tokenRegExp . '/i';
+        $lexemeRegExp = '/^' . $lexemeRegExp . '/i';
         $matches = [];
-        if (preg_match($tokenRegExp, $string, $matches)) {
-            $string = preg_replace($tokenRegExp, '', $string);
+        if (preg_match($lexemeRegExp, $string, $matches)) {
+            $string = preg_replace($lexemeRegExp, '', $string);
             return $matches[0];
         }
 
@@ -80,15 +80,15 @@ class Tokenizer
     }
 
     /**
-     * Searches all tokens in input string and return first of it, or return false if token not found
+     * Searches all lexemes in input string and return first of it, or return false if lexeme not found
      * Changes input string
      *
      * @param string $string Input string
      * @param int $initLength Initial length of string
-     * @return bool|mixed Token or false if token not found
-     * @throws UnknownTokenException if found unknown token
+     * @return bool|mixed Lexeme or false if lexeme not found
+     * @throws UnknownLexemeException if found unknown lexeme
      */
-    private function searchTokens(&$string, $initLength)
+    private function searchLexemes(&$string, $initLength)
     {
         //Ignore leading spaces
         $string = ltrim($string, ' ');
@@ -97,14 +97,14 @@ class Tokenizer
         }
 
         $lengthBefore = strlen($string);
-        foreach (self::$_tokens as $tokenRegExp) {
-            $token = $this->getFirstToken($string, $tokenRegExp);
-            if ($token !== false) {
-                return $token;
+        foreach (self::$_lexemes as $lexemeRegExp) {
+            $lexeme = $this->getFirstLexeme($string, $lexemeRegExp);
+            if ($lexeme !== false) {
+                return $lexeme;
             }
         }
         if ($lengthBefore == strlen($string)) {
-            throw new UnknownTokenException('Unknown token "' . $string[0] . '" at position ' . ($initLength - $lengthBefore + 1));
+            throw new UnknownLexemeException('Unknown lexeme "' . $string[0] . '" at position ' . ($initLength - $lengthBefore + 1));
         }
 
         return false;

@@ -3,7 +3,7 @@
 namespace tests\models;
 
 use app\models\Tokenizer;
-use app\models\UnknownTokenException;
+use app\models\UnknownLexemeException;
 use Codeception\Test\Unit;
 
 class TokenizerTest extends Unit
@@ -23,102 +23,102 @@ class TokenizerTest extends Unit
         $this->tokenizer = new Tokenizer();
     }
 
-    public function testEmpty()
+    public function testParseLexemesEmpty()
     {
-        $this->assertTrue($this->tokenizer->parse('') === []);
+        $this->assertTrue($this->tokenizer->parseLexemes('') === []);
     }
 
-    public function testOnlyOneSpace()
+    public function testParseLexemesOnlyOneSpace()
     {
-        $this->assertTrue($this->tokenizer->parse(' ') === []);
+        $this->assertTrue($this->tokenizer->parseLexemes(' ') === []);
     }
 
-    public function testSpaceDivideToken()
+    public function testParseLexemesSpaceDivideLexeme()
     {
-        $this->assertTrue($this->tokenizer->parse('1 2') === ['1', '2']);
+        $this->assertTrue($this->tokenizer->parseLexemes('1 2') === ['1', '2']);
     }
     
-    public function testConst()
+    public function testParseLexemesConst()
     {
-        $this->assertTrue($this->tokenizer->parse('1') === ['1']);
+        $this->assertTrue($this->tokenizer->parseLexemes('1') === ['1']);
     }
 
-    public function testLongConst()
+    public function testParseLexemesLongConst()
     {
-        $this->assertTrue($this->tokenizer->parse('123') === ['123']);
+        $this->assertTrue($this->tokenizer->parseLexemes('123') === ['123']);
     }
 
-    public function testSimplePlus()
+    public function testParseLexemesSimplePlus()
     {
-        $this->assertTrue($this->tokenizer->parse('1+2') === ['1', '+', '2']);
+        $this->assertTrue($this->tokenizer->parseLexemes('1+2') === ['1', '+', '2']);
     }
 
-    public function testPlus()
+    public function testParseLexemesPlus()
     {
-        $this->assertTrue($this->tokenizer->parse('132+17') === ['132', '+', '17']);
+        $this->assertTrue($this->tokenizer->parseLexemes('132+17') === ['132', '+', '17']);
     }
 
-    public function testUnknownToken()
+    public function testParseLexemesUnknownLexeme()
     {
-        $this->expectException(UnknownTokenException::class);
-        $this->tokenizer->parse('13~+17');
+        $this->expectException(UnknownLexemeException::class);
+        $this->tokenizer->parseLexemes('13~+17');
     }
 
-    public function testMinus()
+    public function testParseLexemesMinus()
     {
-        $this->assertTrue($this->tokenizer->parse('554-1024') === ['554', '-', '1024']);
+        $this->assertTrue($this->tokenizer->parseLexemes('554-1024') === ['554', '-', '1024']);
     }
 
-    public function testMultiply()
+    public function testParseLexemesMultiply()
     {
-        $this->assertTrue($this->tokenizer->parse('337*123') === ['337', '*', '123']);
+        $this->assertTrue($this->tokenizer->parseLexemes('337*123') === ['337', '*', '123']);
     }
 
-    public function testDivide()
+    public function testParseLexemesDivide()
     {
-        $this->assertTrue($this->tokenizer->parse('654/19') === ['654', '/', '19']);
+        $this->assertTrue($this->tokenizer->parseLexemes('654/19') === ['654', '/', '19']);
     }
 
-    public function testParenthesis()
+    public function testParseLexemesParenthesis()
     {
-        $this->assertTrue($this->tokenizer->parse('(23-(33))') === ['(', '23', '-', '(', '33', ')', ')']);
+        $this->assertTrue($this->tokenizer->parseLexemes('(23-(33))') === ['(', '23', '-', '(', '33', ')', ')']);
     }
 
-    public function testIgnoreSpaces()
+    public function testParseLexemesIgnoreSpaces()
     {
-        $this->assertTrue($this->tokenizer->parse(' 27  -          19      ') === ['27', '-', '19']);
+        $this->assertTrue($this->tokenizer->parseLexemes(' 27  -          19      ') === ['27', '-', '19']);
     }
 
-    public function testUnknownTokenPosition3()
+    public function testParseLexemesUnknownLexemePosition3()
     {
         $this->expectExceptionMessage('position 3');
-        $this->tokenizer->parse('13~+17');
+        $this->tokenizer->parseLexemes('13~+17');
     }
 
-    public function testUnknownTokenPosition5()
+    public function testParseLexemesUnknownLexemePosition5()
     {
         $this->expectExceptionMessage('position 5');
-        $this->tokenizer->parse('1343~+17');
+        $this->tokenizer->parseLexemes('1343~+17');
     }
 
-    public function testUnknownTokenValue()
+    public function testParseLexemesUnknownLexemeValue()
     {
-        $this->expectExceptionMessage('token "~"');
-        $this->tokenizer->parse('13~+17');
+        $this->expectExceptionMessage('lexeme "~"');
+        $this->tokenizer->parseLexemes('13~+17');
     }
 
-    public function testLiteral()
+    public function testParseLexemesLiteral()
     {
-        $this->assertTrue($this->tokenizer->parse('sin(12) + 1') === ['sin', '(', '12', ')', '+', '1']);
+        $this->assertTrue($this->tokenizer->parseLexemes('sin(12) + 1') === ['sin', '(', '12', ')', '+', '1']);
     }
 
-    public function testLiteralDifferentCases()
+    public function testParseLexemesLiteralDifferentCases()
     {
-        $this->assertTrue($this->tokenizer->parse('AbCdE') === ['AbCdE']);
+        $this->assertTrue($this->tokenizer->parseLexemes('AbCdE') === ['AbCdE']);
     }
 
-    public function testComplex()
+    public function testParseLexemesComplex()
     {
-        $this->assertTrue($this->tokenizer->parse('12-(    (2  +339)  /7) *      4756098321') === ['12', '-', '(', '(', '2', '+', '339', ')', '/', '7', ')', '*', '4756098321']);
+        $this->assertTrue($this->tokenizer->parseLexemes('12-(    (2  +339)  /7) *      4756098321') === ['12', '-', '(', '(', '2', '+', '339', ')', '/', '7', ')', '*', '4756098321']);
     }
 }

@@ -4,7 +4,7 @@ namespace app\models;
 
 use yii\base\Exception;
 
-class UnknownTokenException extends Exception
+class UnknownLexemeException extends Exception
 {
 
 }
