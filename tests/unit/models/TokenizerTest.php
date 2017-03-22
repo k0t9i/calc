@@ -2,6 +2,8 @@
 
 namespace tests\models;
 
+use app\models\NumToken;
+use app\models\PlusToken;
 use app\models\Tokenizer;
 use app\models\UnknownLexemeException;
 use Codeception\Test\Unit;
@@ -9,14 +11,15 @@ use Codeception\Test\Unit;
 class TokenizerTest extends Unit
 {
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
      * @var Tokenizer
      */
     protected $tokenizer;
+
+    protected function assertEqualArrayOfObject($first, $second, $strict = false, $message = '')
+    {
+        $this->assertArraySubset($first, $second, $strict, $message);
+        $this->assertArraySubset($second, $first, $strict, $message);
+    }
 
     protected function _before()
     {
@@ -32,11 +35,6 @@ class TokenizerTest extends Unit
     {
         $this->assertTrue($this->tokenizer->parseLexemes(' ') === []);
     }
-
-    public function testParseLexemesSpaceDivideLexeme()
-    {
-        $this->assertTrue($this->tokenizer->parseLexemes('1 2') === ['1', '2']);
-    }
     
     public function testParseLexemesConst()
     {
@@ -46,6 +44,11 @@ class TokenizerTest extends Unit
     public function testParseLexemesLongConst()
     {
         $this->assertTrue($this->tokenizer->parseLexemes('123') === ['123']);
+    }
+
+    public function testParseLexemesSpaceDivideLexeme()
+    {
+        $this->assertTrue($this->tokenizer->parseLexemes('1 2') === ['1', '2']);
     }
 
     public function testParseLexemesSimplePlus()
@@ -120,5 +123,25 @@ class TokenizerTest extends Unit
     public function testParseLexemesComplex()
     {
         $this->assertTrue($this->tokenizer->parseLexemes('12-(    (2  +339)  /7) *      4756098321') === ['12', '-', '(', '(', '2', '+', '339', ')', '/', '7', ')', '*', '4756098321']);
+    }
+
+    public function testTokenizeEmpty()
+    {
+        $this->assertTrue($this->tokenizer->tokenize('') === []);
+    }
+
+    public function testTokenizeOnlyOneSpace()
+    {
+        $this->assertTrue($this->tokenizer->tokenize(' ') === []);
+    }
+
+    public function testTokenizeSpaceDivideLexeme()
+    {
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('1 2 3'), [new NumToken('1'), new NumToken(2), new NumToken(3)]);
+    }
+
+    public function testTokenizePlus()
+    {
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('132+17'), [new NumToken('132'), new PlusToken('+'), new NumToken(17)]);
     }
 }

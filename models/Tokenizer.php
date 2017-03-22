@@ -26,15 +26,34 @@ class Tokenizer
      * @var array
      */
     private static $_lexemes = [
-        self::LEXEME_NUMBER,
-        self::LEXEME_LITERAL,
-        self::LEXEME_PLUS,
-        self::LEXEME_MINUS,
-        self::LEXEME_MULTIPLY,
-        self::LEXEME_DIVIDE,
-        self::LEXEME_LEFT_PARENTHESIS,
-        self::LEXEME_RIGHT_PARENTHESIS
+        self::LEXEME_NUMBER => 'num',
+        self::LEXEME_LITERAL => 'lit',
+        self::LEXEME_PLUS => 'plus',
+        self::LEXEME_MINUS => 'minus',
+        self::LEXEME_MULTIPLY => 'mul',
+        self::LEXEME_DIVIDE => 'div',
+        self::LEXEME_LEFT_PARENTHESIS => 'lPar',
+        self::LEXEME_RIGHT_PARENTHESIS => 'rPar'
     ];
+
+    public function tokenize($string)
+    {
+        $result = [];
+        $lexemes = $this->parseLexemes($string);
+        foreach ($lexemes as $lexeme) {
+            $value = $lexeme;
+            foreach (self::$_lexemes as $lexemeRegExp => $name) {
+                if ($this->getFirstLexeme($lexeme, $lexemeRegExp) !== false) {
+                    $class = 'app\models\\' . ucfirst($name) . 'Token';
+                    $token = new $class($value);
+                    $result[] = $token;
+                    break;
+                }
+            }
+        }
+
+        return $result;
+    }
 
     /**
      * Parse input string into list of lexemes
@@ -97,7 +116,7 @@ class Tokenizer
         }
 
         $lengthBefore = strlen($string);
-        foreach (self::$_lexemes as $lexemeRegExp) {
+        foreach (self::$_lexemes as $lexemeRegExp => $name) {
             $lexeme = $this->getFirstLexeme($string, $lexemeRegExp);
             if ($lexeme !== false) {
                 return $lexeme;
