@@ -11,7 +11,7 @@ namespace app\models;
  */
 class Tokenizer
 {
-    const LEXEME_NUMBER = '[0-9]+';
+    const LEXEME_NUMBER = '[0-9]+(\.?[0-9]+)|([0-9]*)';
     const LEXEME_LITERAL = '[a-z][a-z0-9]*';
     const LEXEME_PLUS = '\+';
     const LEXEME_MINUS = '\-';
@@ -90,8 +90,8 @@ class Tokenizer
     {
         $lexemeRegExp = '/^' . $lexemeRegExp . '/i';
         $matches = [];
-        if (preg_match($lexemeRegExp, $string, $matches)) {
-            $string = preg_replace($lexemeRegExp, '', $string);
+        if (preg_match($lexemeRegExp, $string, $matches) && $matches[0]) {
+            $string = preg_replace($lexemeRegExp, '', $string, 1);
             return $matches[0];
         }
 
