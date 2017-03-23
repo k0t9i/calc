@@ -2,13 +2,13 @@
 
 namespace tests\models;
 
-use app\models\PlusToken;
+use app\models\RParToken;
 use Codeception\Test\Unit;
 
-class PlusTokenTest extends Unit
+class RParTokenTest extends Unit
 {
     public function testNotRequiresValue()
     {
-        new PlusToken();
+        new RParToken();
     }
 }

@@ -11,42 +11,16 @@ namespace app\models;
  */
 class Tokenizer
 {
-    const LEXEME_NUMBER = '[0-9]+(\.?[0-9]+)|([0-9]*)';
-    const LEXEME_LITERAL = '[a-z][a-z0-9]*';
-    const LEXEME_PLUS = '\+';
-    const LEXEME_MINUS = '\-';
-    const LEXEME_MULTIPLY = '\*';
-    const LEXEME_DIVIDE = '\/';
-    const LEXEME_LEFT_PARENTHESIS = '\(';
-    const LEXEME_RIGHT_PARENTHESIS = '\)';
-
-    /**
-     * List of existing lexemes
-     *
-     * @var array
-     */
-    private static $_lexemes = [
-        self::LEXEME_NUMBER => 'num',
-        self::LEXEME_LITERAL => 'lit',
-        self::LEXEME_PLUS => 'plus',
-        self::LEXEME_MINUS => 'minus',
-        self::LEXEME_MULTIPLY => 'mul',
-        self::LEXEME_DIVIDE => 'div',
-        self::LEXEME_LEFT_PARENTHESIS => 'lPar',
-        self::LEXEME_RIGHT_PARENTHESIS => 'rPar'
-    ];
-
     public function tokenize($string)
     {
         $result = [];
         $lexemes = $this->parseLexemes($string);
         foreach ($lexemes as $lexeme) {
             $value = $lexeme;
-            foreach (self::$_lexemes as $lexemeRegExp => $name) {
+            /** @var Token $proto */
+            foreach (Token::getTokenTypes() as $lexemeRegExp => $proto) {
                 if ($this->getFirstLexeme($lexeme, $lexemeRegExp) !== false) {
-                    $class = 'app\models\\' . ucfirst($name) . 'Token';
-                    $token = new $class($value);
-                    $result[] = $token;
+                    $result[] = $proto->create($value);
                     break;
                 }
             }
@@ -116,7 +90,7 @@ class Tokenizer
         }
 
         $lengthBefore = strlen($string);
-        foreach (self::$_lexemes as $lexemeRegExp => $name) {
+        foreach (Token::getTokenTypes() as $lexemeRegExp => $_) {
             $lexeme = $this->getFirstLexeme($string, $lexemeRegExp);
             if ($lexeme !== false) {
                 return $lexeme;

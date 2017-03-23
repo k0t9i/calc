@@ -120,16 +120,6 @@ class TokenizerTest extends Unit
         $this->tokenizer->parseLexemes('13~+17');
     }
 
-    public function testParseLexemesLiteral()
-    {
-        $this->assertTrue($this->tokenizer->parseLexemes('sin(12) + 1') === ['sin', '(', '12', ')', '+', '1']);
-    }
-
-    public function testParseLexemesLiteralDifferentCases()
-    {
-        $this->assertTrue($this->tokenizer->parseLexemes('AbCdE') === ['AbCdE']);
-    }
-
     public function testParseLexemesComplex()
     {
         $this->assertTrue($this->tokenizer->parseLexemes('12-(    (2  +339)  /7) *      4756098321') === ['12', '-', '(', '(', '2', '+', '339', ')', '/', '7', ')', '*', '4756098321']);

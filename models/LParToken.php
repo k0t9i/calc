@@ -17,6 +17,11 @@ class LParToken extends Token
 
     protected function requireValue()
     {
-        // TODO: Implement requireValue() method.
+        return false;
+    }
+
+    protected function getLexemeRegExp()
+    {
+        return '\(';
     }
 }

@@ -6,16 +6,21 @@ class PlusToken extends Token
 {
     protected function doGetValue(array $args)
     {
-        return $args[0] + $args[1];
+        // TODO: Implement doGetValue() method.
     }
 
     protected function argsCount()
     {
-        return 2;
+        // TODO: Implement argsCount() method.
     }
 
     protected function requireValue()
     {
         return false;
+    }
+
+    protected function getLexemeRegExp()
+    {
+        return '\+';
     }
 }

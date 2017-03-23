@@ -2,13 +2,13 @@
 
 namespace tests\models;
 
-use app\models\PlusToken;
+use app\models\DivToken;
 use Codeception\Test\Unit;
 
-class PlusTokenTest extends Unit
+class DivTokenTest extends Unit
 {
     public function testNotRequiresValue()
     {
-        new PlusToken();
+        new DivToken();
     }
 }
