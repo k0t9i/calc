@@ -2,8 +2,13 @@
 
 namespace tests\models;
 
+use app\models\DivToken;
+use app\models\LParToken;
+use app\models\MinusToken;
+use app\models\MulToken;
 use app\models\NumToken;
 use app\models\PlusToken;
+use app\models\RParToken;
 use app\models\Tokenizer;
 use app\models\UnknownLexemeException;
 use Codeception\Test\Unit;
@@ -36,14 +41,19 @@ class TokenizerTest extends Unit
         $this->assertTrue($this->tokenizer->parseLexemes(' ') === []);
     }
     
-    public function testParseLexemesConst()
+    public function testParseLexemesNumber()
     {
         $this->assertTrue($this->tokenizer->parseLexemes('1') === ['1']);
     }
 
-    public function testParseLexemesLongConst()
+    public function testParseLexemesLongNumber()
     {
         $this->assertTrue($this->tokenizer->parseLexemes('123') === ['123']);
+    }
+
+    public function testParseLexemesFloatNumber()
+    {
+        $this->assertTrue($this->tokenizer->parseLexemes('13333.24444') === ['13333.24444']);
     }
 
     public function testParseLexemesSpaceDivideLexeme()
@@ -135,6 +145,16 @@ class TokenizerTest extends Unit
         $this->assertTrue($this->tokenizer->tokenize(' ') === []);
     }
 
+    public function testTokenizeNumber()
+    {
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('123'), [new NumToken('123')]);
+    }
+
+    public function testTokenizeFloatNumber()
+    {
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('123.23423'), [new NumToken('123.23423')]);
+    }
+
     public function testTokenizeSpaceDivideLexeme()
     {
         $this->assertEqualArrayOfObject($this->tokenizer->tokenize('1 2 3'), [new NumToken('1'), new NumToken(2), new NumToken(3)]);
@@ -142,6 +162,56 @@ class TokenizerTest extends Unit
 
     public function testTokenizePlus()
     {
-        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('132+17'), [new NumToken('132'), new PlusToken('+'), new NumToken(17)]);
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('+'), [new PlusToken()]);
     }
+
+    public function testTokenizeMinus()
+    {
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('-'), [new MinusToken()]);
+    }
+
+    public function testTokenizeMultiply()
+    {
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('*'), [new MulToken()]);
+    }
+
+    public function testTokenizeDivide()
+    {
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('/'), [new DivToken()]);
+    }
+
+    public function testTokenizeLeftParentheses()
+    {
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('('), [new LParToken()]);
+    }
+
+    public function testTokenizeRightParentheses()
+    {
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize(')'), [new RParToken()]);
+    }
+
+    public function testTokenizeIgnoreSpaces()
+    {
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize(' 27  -          19      '), [new NumToken(27), new MinusToken(), new NumToken(19)]);
+    }
+
+    public function testTokenizeComplex()
+    {
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('12-(    (2  +339)  /7) *      4756098321'),  [
+            new NumToken(12),
+            new MinusToken(),
+            new LParToken(),
+            new LParToken(),
+            new NumToken(2),
+            new PlusToken(),
+            new NumToken(339),
+            new RParToken(),
+            new DivToken(),
+            new NumToken(7),
+            new RParToken(),
+            new MulToken(),
+            new NumToken(4756098321)
+        ]);
+    }
+
 }
