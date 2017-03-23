@@ -11,7 +11,9 @@ abstract class Token
         if ($this->requireValue() && is_null($value)) {
             throw new \InvalidArgumentException();
         }
-        $this->_value = $value;
+        if ($this->requireValue()) {
+            $this->_value = $value;
+        }
     }
 
     public function getValue()
