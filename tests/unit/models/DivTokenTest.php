@@ -2,7 +2,7 @@
 
 namespace tests\models;
 
-use app\models\DivToken;
+use app\models\tokens\DivToken;
 use Codeception\Test\Unit;
 
 class DivTokenTest extends Unit

@@ -2,7 +2,7 @@
 
 namespace tests\models;
 
-use app\models\NumToken;
+use app\models\tokens\NumToken;
 use Codeception\Test\Unit;
 
 class NumTokenTest extends Unit

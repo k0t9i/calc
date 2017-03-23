@@ -2,13 +2,13 @@
 
 namespace tests\models;
 
-use app\models\DivToken;
-use app\models\LParToken;
-use app\models\MinusToken;
-use app\models\MulToken;
-use app\models\NumToken;
-use app\models\PlusToken;
-use app\models\RParToken;
+use app\models\tokens\DivToken;
+use app\models\tokens\LParToken;
+use app\models\tokens\MinusToken;
+use app\models\tokens\MulToken;
+use app\models\tokens\NumToken;
+use app\models\tokens\PlusToken;
+use app\models\tokens\RParToken;
 use app\models\Tokenizer;
 use app\models\UnknownLexemeException;
 use Codeception\Test\Unit;

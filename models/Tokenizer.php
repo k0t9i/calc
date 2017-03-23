@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+use app\models\tokens\Token;
 
 /**
  * Class Tokenizer
@@ -17,7 +18,6 @@ class Tokenizer
         $lexemes = $this->parseLexemes($string);
         foreach ($lexemes as $lexeme) {
             $value = $lexeme;
-            /** @var Token $proto */
             foreach (Token::getTokenTypes() as $lexemeRegExp => $proto) {
                 if ($this->getFirstLexeme($lexeme, $lexemeRegExp) !== false) {
                     $result[] = $proto->create($value);

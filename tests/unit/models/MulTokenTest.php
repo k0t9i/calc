@@ -2,7 +2,7 @@
 
 namespace tests\models;
 
-use app\models\MulToken;
+use app\models\tokens\MulToken;
 use Codeception\Test\Unit;
 
 class MulTokenTest extends Unit

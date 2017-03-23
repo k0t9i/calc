@@ -2,7 +2,7 @@
 
 namespace tests\models;
 
-use app\models\PlusToken;
+use app\models\tokens\PlusToken;
 use Codeception\Test\Unit;
 
 class PlusTokenTest extends Unit
