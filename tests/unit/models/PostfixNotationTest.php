@@ -30,16 +30,17 @@ class PostfixNotationTest extends Unit
         $this->tokenizer = new Tokenizer();
         $this->notation = new PostfixNotation();
     }
+
     public function testConvertEmpty()
     {
         $tokens = $this->tokenizer->tokenize('');
-        $this->assertEquals($this->notation->convert($tokens), []);
+        $this->assertEquals([], $this->notation->convert($tokens));
     }
 
     public function testConvertOnlyOneSpace()
     {
         $tokens = $this->tokenizer->tokenize(' ');
-        $this->assertEquals($this->notation->convert($tokens), []);
+        $this->assertEquals([], $this->notation->convert($tokens));
     }
 
     public function testConvertAdditionOfTwoNumber()
@@ -53,33 +54,33 @@ class PostfixNotationTest extends Unit
     public function testConvertIgnoreSpaces()
     {
         $tokens = $this->tokenizer->tokenize('2  + 3');
-        $this->assertEquals($this->notation->convert($tokens), [
+        $this->assertEquals([
             new NumToken(1, '2'), new NumToken(6, '3'), new PlusToken(4)
-        ]);
+        ], $this->notation->convert($tokens));
     }
 
     public function testConvertAdditionOfTwoNumberWithParenthesis()
     {
         $tokens = $this->tokenizer->tokenize('(2+3)');
-        $this->assertEquals($this->notation->convert($tokens), [
+        $this->assertEquals([
             new NumToken(2, '2'), new NumToken(4, '3'), new PlusToken(3)
-        ]);
+        ], $this->notation->convert($tokens));
     }
 
     public function testConvertTwoOperator()
     {
         $tokens = $this->tokenizer->tokenize('2+3-1');
-        $this->assertEquals($this->notation->convert($tokens), [
+        $this->assertEquals([
             new NumToken(1, '2'), new NumToken(3, '3'), new PlusToken(2), new NumToken(5, '1'), new MinusToken(4)
-        ]);
+        ], $this->notation->convert($tokens));
     }
 
-    public function testConvertTwoOperatorWithParentensis()
+    public function testConvertTwoOperatorWithParenthesis()
     {
         $tokens = $this->tokenizer->tokenize('(2+3-1)');
-        $this->assertEquals($this->notation->convert($tokens), [
+        $this->assertEquals([
             new NumToken(2, '2'), new NumToken(4, '3'), new PlusToken(3), new NumToken(6, '1'), new MinusToken(5)
-        ]);
+        ], $this->notation->convert($tokens));
     }
 
     public function testConvertMissingRightParentheses()
@@ -99,23 +100,23 @@ class PostfixNotationTest extends Unit
     public function testConvertTwoOperatorWithDifferentPrecedence()
     {
         $tokens = $this->tokenizer->tokenize('2+3*1');
-        $this->assertEquals($this->notation->convert($tokens), [
+        $this->assertEquals([
             new NumToken(1, '2'), new NumToken(3, '3'), new NumToken(5, '1'), new MulToken(4), new PlusToken(2)
-        ]);
+        ], $this->notation->convert($tokens));
     }
 
     public function testConvertTwoOperatorWithDifferentAssociativity()
     {
         $tokens = $this->tokenizer->tokenize('2^3^1');
-        $this->assertEquals($this->notation->convert($tokens), [
+        $this->assertEquals([
             new NumToken(1, '2'), new NumToken(3, '3'), new NumToken(5, '1'), new PowToken(4), new PowToken(2)
-        ]);
+        ], $this->notation->convert($tokens));
     }
 
     public function testConvertComplex()
     {
         $tokens = $this->tokenizer->tokenize('3+4*2/(1-5)^2^3');
-        $this->assertEquals($this->notation->convert($tokens), [
+        $this->assertEquals([
             new NumToken(1, '3'),
             new NumToken(3, '4'),
             new NumToken(5, '2'),
@@ -129,6 +130,6 @@ class PostfixNotationTest extends Unit
             new PowToken(12),
             new DivToken(6),
             new PlusToken(2),
-        ]);
+        ], $this->notation->convert($tokens));
     }
 }

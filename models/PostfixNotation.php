@@ -37,7 +37,7 @@ class PostfixNotation
                 $this->popTokensWhileNotFoundLeftParentheses($stack, $output);
 
             } elseif ($current instanceof OperatorToken) {
-                $this->popTokensWhileOperatorMustGoBeforeCurrent($stack, $current, $output);
+                $this->popTokensWhileOperatorGoBeforeCurrent($stack, $current, $output);
             }
         }
 
@@ -100,7 +100,7 @@ class PostfixNotation
      * @param Token[] $output Output array of tokens
      * @param OperatorToken $current Current operator
      */
-    private function popTokensWhileOperatorMustGoBeforeCurrent(\SplStack $stack, $current, &$output)
+    private function popTokensWhileOperatorGoBeforeCurrent(\SplStack $stack, $current, &$output)
     {
         if ($stack->count() > 0) {
             $top = $stack->top();

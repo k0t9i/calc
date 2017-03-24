@@ -28,48 +28,48 @@ class TokenizerTest extends Unit
 
     public function testTokenizeEmpty()
     {
-        $this->assertEquals($this->tokenizer->tokenize(''), []);
+        $this->assertEquals([], $this->tokenizer->tokenize(''));
     }
 
     public function testTokenizeOnlyOneSpace()
     {
-        $this->assertEquals($this->tokenizer->tokenize(' '), []);
+        $this->assertEquals([], $this->tokenizer->tokenize(' '));
     }
 
     public function testTokenizeNumber()
     {
-        $this->assertEquals($this->tokenizer->tokenize('123'), [new NumToken(1, '123')]);
+        $this->assertEquals([new NumToken(1, '123')], $this->tokenizer->tokenize('123'));
     }
 
     public function testTokenizeFloatNumber()
     {
-        $this->assertEquals($this->tokenizer->tokenize('123.23423'), [new NumToken(1, '123.23423')]);
+        $this->assertEquals([new NumToken(1, '123.23423')], $this->tokenizer->tokenize('123.23423'));
     }
 
     public function testTokenizePosition()
     {
-        $this->assertEquals($this->tokenizer->tokenize('123  +  22'), [
+        $this->assertEquals([
             new NumToken(1, '123'), new PlusToken(6), new NumToken(9, '22')
-        ]);
+        ], $this->tokenizer->tokenize('123  +  22'));
     }
 
     public function testTokenizeInvalidPosition()
     {
-        $this->assertNotEquals($this->tokenizer->tokenize('123  +  22'), [
+        $this->assertNotEquals([
             new NumToken(1, '123'), new PlusToken(3), new NumToken(9, '22')
-        ]);
+        ], $this->tokenizer->tokenize('123  +  22'));
     }
 
     public function testTokenizeSpaceDivideLexeme()
     {
-        $this->assertEquals($this->tokenizer->tokenize('1 2 3'), [
+        $this->assertEquals([
             new NumToken(1, '1'), new NumToken(3, '2'), new NumToken(5, '3')
-        ]);
+        ], $this->tokenizer->tokenize('1 2 3'));
     }
 
     public function testTokenizePlus()
     {
-        $this->assertEquals($this->tokenizer->tokenize('+'), [new PlusToken(1)]);
+        $this->assertEquals([new PlusToken(1)], $this->tokenizer->tokenize('+'));
     }
 
     public function testTokenizeUnknownLexeme()
@@ -98,44 +98,44 @@ class TokenizerTest extends Unit
 
     public function testTokenizeMinus()
     {
-        $this->assertEquals($this->tokenizer->tokenize('-'), [new MinusToken(1)]);
+        $this->assertEquals([new MinusToken(1)], $this->tokenizer->tokenize('-'));
     }
 
     public function testTokenizeMultiply()
     {
-        $this->assertEquals($this->tokenizer->tokenize('*'), [new MulToken(1)]);
+        $this->assertEquals([new MulToken(1)], $this->tokenizer->tokenize('*'));
     }
 
     public function testTokenizeDivide()
     {
-        $this->assertEquals($this->tokenizer->tokenize('/'), [new DivToken(1)]);
+        $this->assertEquals([new DivToken(1)], $this->tokenizer->tokenize('/'));
     }
 
     public function testTokenizePower()
     {
-        $this->assertEquals($this->tokenizer->tokenize('^'), [new PowToken(1)]);
+        $this->assertEquals([new PowToken(1)], $this->tokenizer->tokenize('^'));
     }
 
     public function testTokenizeLeftParentheses()
     {
-        $this->assertEquals($this->tokenizer->tokenize('('), [new LParToken(1)]);
+        $this->assertEquals([new LParToken(1)], $this->tokenizer->tokenize('('));
     }
 
     public function testTokenizeRightParentheses()
     {
-        $this->assertEquals($this->tokenizer->tokenize(')'), [new RParToken(1)]);
+        $this->assertEquals([new RParToken(1)], $this->tokenizer->tokenize(')'));
     }
 
     public function testTokenizeIgnoreSpaces()
     {
-        $this->assertEquals($this->tokenizer->tokenize(' 27  -          19      '), [
+        $this->assertEquals([
             new NumToken(2, '27'), new MinusToken(6), new NumToken(17, '19')
-        ]);
+        ], $this->tokenizer->tokenize(' 27  -          19      '));
     }
 
     public function testTokenizeComplex()
     {
-        $this->assertEquals($this->tokenizer->tokenize('12-(    (2  +339)  /7) *      47560^98321'),  [
+        $this->assertEquals([
             new NumToken(1, '12'),
             new MinusToken(3),
             new LParToken(4),
@@ -151,7 +151,7 @@ class TokenizerTest extends Unit
             new NumToken(31, '47560'),
             new PowToken(36),
             new NumToken(37, '98321')
-        ]);
+        ], $this->tokenizer->tokenize('12-(    (2  +339)  /7) *      47560^98321'));
     }
 
 }
