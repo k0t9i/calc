@@ -54,7 +54,7 @@ abstract class OperatorToken extends Token
      *
      * @return integer
      */
-     abstract public function getPrecedence();
+    abstract public function getPrecedence();
 
     /**
      * Operator associativity: OperatorToken::ASSOCIATIVE_LEFT, OperatorToken::ASSOCIATIVE_RIGHT
