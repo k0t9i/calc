@@ -37,7 +37,7 @@ class NumToken extends Token
     /**
      * @inheritdoc
      */
-    protected function getLexemeRegExp()
+    public function getLexemeRegExp()
     {
         return '[0-9]+(\.?[0-9]+)|([0-9]*)';
     }

@@ -11,4 +11,10 @@ class RParTokenTest extends Unit
     {
         new RParToken(1);
     }
+
+    public function testGetLexeme()
+    {
+        $token = new RParToken(0);
+        $this->assertTrue(preg_match($token->getLexemeFullRegExp(), $token->getLexeme()) == 1);
+    }
 }

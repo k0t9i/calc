@@ -93,6 +93,21 @@ abstract class Token
     }
 
     /**
+     * Lexeme for concrete Token
+     *
+     * @return string
+     */
+    public function getLexeme()
+    {
+        return $this->_value;
+    }
+
+    public function getLexemeFullRegExp()
+    {
+        return '/^' . $this->getLexemeRegExp() . '/';
+    }
+
+    /**
      * Register existing token types
      *
      * @return Token[]
@@ -120,7 +135,7 @@ abstract class Token
      */
     private static function registerTokenType(Token $token)
     {
-        self::$_tokenTypes[$token->getLexemeRegExp()] = $token;
+        self::$_tokenTypes[$token->getLexemeFullRegExp()] = $token;
     }
 
     /**
@@ -150,5 +165,5 @@ abstract class Token
      *
      * @return string
      */
-    abstract protected function getLexemeRegExp();
+    abstract public function getLexemeRegExp();
 }

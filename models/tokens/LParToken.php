@@ -9,6 +9,7 @@ namespace app\models\tokens;
  */
 class LParToken extends Token
 {
+    const LEXEME = '(';
 
     /**
      * @inheritdoc
@@ -37,8 +38,13 @@ class LParToken extends Token
     /**
      * @inheritdoc
      */
-    protected function getLexemeRegExp()
+    public function getLexemeRegExp()
     {
-        return '\(';
+        return '\\' . $this->getLexeme();
+    }
+
+    public function getLexeme()
+    {
+        return self::LEXEME;
     }
 }

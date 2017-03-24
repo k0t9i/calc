@@ -45,7 +45,6 @@ class Tokenizer
      */
     public function getFirstLexeme(&$string, $lexemeRegExp)
     {
-        $lexemeRegExp = '/^' . $lexemeRegExp . '/i';
         $matches = [];
         if (preg_match($lexemeRegExp, $string, $matches) && $matches[0]) {
             $string = preg_replace($lexemeRegExp, '', $string, 1);

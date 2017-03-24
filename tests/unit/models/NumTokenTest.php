@@ -12,4 +12,10 @@ class NumTokenTest extends Unit
         $this->expectException(\InvalidArgumentException::class);
         new NumToken(1);
     }
+
+    public function testGetLexeme()
+    {
+        $token = new NumToken(0, '1234');
+        $this->assertTrue($token->getLexeme() == 1234);
+    }
 }

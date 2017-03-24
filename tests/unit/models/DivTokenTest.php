@@ -25,4 +25,17 @@ class DivTokenTest extends Unit
         $args = [new NumToken(0, '6'), new NumToken(0, '3')];
         $this->assertTrue($token->getValue($args) == 2);
     }
+
+    public function testGetFloatValue()
+    {
+        $token = new DivToken(0);
+        $args = [new NumToken(0, '6'), new NumToken(0, '4')];
+        $this->assertTrue($token->getValue($args) == 1.5);
+    }
+
+    public function testGetLexeme()
+    {
+        $token = new DivToken(0);
+        $this->assertTrue(preg_match($token->getLexemeFullRegExp(), $token->getLexeme()) == 1);
+    }
 }

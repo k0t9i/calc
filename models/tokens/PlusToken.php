@@ -9,6 +9,7 @@ namespace app\models\tokens;
  */
 class PlusToken extends OperatorToken
 {
+    const LEXEME = '+';
 
     /**
      * @inheritdoc
@@ -37,9 +38,9 @@ class PlusToken extends OperatorToken
     /**
      * @inheritdoc
      */
-    protected function getLexemeRegExp()
+    public function getLexemeRegExp()
     {
-        return '\+';
+        return '\\' . $this->getLexeme();
     }
 
     public function getPrecedence()
@@ -50,5 +51,10 @@ class PlusToken extends OperatorToken
     public function getAssociativity()
     {
         return self::ASSOCIATIVE_LEFT;
+    }
+
+    public function getLexeme()
+    {
+        return self::LEXEME;
     }
 }

@@ -25,4 +25,10 @@ class MulTokenTest extends Unit
         $args = [new NumToken(0, '5'), new NumToken(0, '3')];
         $this->assertTrue($token->getValue($args) == 15);
     }
+
+    public function testGetLexeme()
+    {
+        $token = new MulToken(0);
+        $this->assertTrue(preg_match($token->getLexemeFullRegExp(), $token->getLexeme()) == 1);
+    }
 }

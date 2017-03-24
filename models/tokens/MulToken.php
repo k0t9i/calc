@@ -9,6 +9,7 @@ namespace app\models\tokens;
  */
 class MulToken extends OperatorToken
 {
+    const LEXEME = '*';
 
     /**
      * @inheritdoc
@@ -34,14 +35,6 @@ class MulToken extends OperatorToken
         return false;
     }
 
-    /**
-     * @inheritdoc
-     */
-    protected function getLexemeRegExp()
-    {
-        return '\*';
-    }
-
     public function getPrecedence()
     {
         return 2;
@@ -50,5 +43,18 @@ class MulToken extends OperatorToken
     public function getAssociativity()
     {
         return self::ASSOCIATIVE_LEFT;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLexemeRegExp()
+    {
+        return '\\' . $this->getLexeme();
+    }
+
+    public function getLexeme()
+    {
+        return self::LEXEME;
     }
 }

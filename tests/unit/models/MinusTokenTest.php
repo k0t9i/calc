@@ -25,4 +25,10 @@ class MinusTokenTest extends Unit
         $args = [new NumToken(0, '5'), new NumToken(0, '3')];
         $this->assertTrue($token->getValue($args) == 2);
     }
+
+    public function testGetLexeme()
+    {
+        $token = new MinusToken(0);
+        $this->assertTrue(preg_match($token->getLexemeFullRegExp(), $token->getLexeme()) == 1);
+    }
 }

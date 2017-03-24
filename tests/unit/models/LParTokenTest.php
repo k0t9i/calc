@@ -11,4 +11,10 @@ class LParTokenTest extends Unit
     {
         new LParToken(1);
     }
+
+    public function testGetLexeme()
+    {
+        $token = new LParToken(0);
+        $this->assertTrue(preg_match($token->getLexemeFullRegExp(), $token->getLexeme()) == 1);
+    }
 }

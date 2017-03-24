@@ -4,6 +4,7 @@ namespace app\models\tokens;
 
 class PowToken extends OperatorToken
 {
+    const LEXEME = '^';
 
     /**
      * @inheritdoc
@@ -29,14 +30,6 @@ class PowToken extends OperatorToken
         return false;
     }
 
-    /**
-     * @inheritdoc
-     */
-    protected function getLexemeRegExp()
-    {
-        return '\^';
-    }
-
     public function getPrecedence()
     {
         return 3;
@@ -46,4 +39,18 @@ class PowToken extends OperatorToken
     {
         return self::ASSOCIATIVE_RIGHT;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLexemeRegExp()
+    {
+        return '\\' . $this->getLexeme();
+    }
+
+    public function getLexeme()
+    {
+        return self::LEXEME;
+    }
+
 }
