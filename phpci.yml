@@ -14,6 +14,13 @@ test:
         standard: "PSR2"
     php_cpd:
         allow_failures: true
+    php_cs_fixer:
+        verbose: true
+        diff: true
+        level: "psr2"
+    php_docblock_checker:
+    php_loc:
+    php_spec:
     codeception:
         allow_failures: false
         config: "codeception.yml"
