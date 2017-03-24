@@ -8,6 +8,7 @@ use app\models\tokens\MinusToken;
 use app\models\tokens\MulToken;
 use app\models\tokens\NumToken;
 use app\models\tokens\PlusToken;
+use app\models\tokens\PowToken;
 use app\models\tokens\RParToken;
 use app\models\Tokenizer;
 use app\models\UnknownLexemeException;
@@ -110,6 +111,11 @@ class TokenizerTest extends Unit
         $this->assertEquals($this->tokenizer->tokenize('/'), [new DivToken(1)]);
     }
 
+    public function testTokenizePower()
+    {
+        $this->assertEquals($this->tokenizer->tokenize('^'), [new PowToken(1)]);
+    }
+
     public function testTokenizeLeftParentheses()
     {
         $this->assertEquals($this->tokenizer->tokenize('('), [new LParToken(1)]);
@@ -129,7 +135,7 @@ class TokenizerTest extends Unit
 
     public function testTokenizeComplex()
     {
-        $this->assertEquals($this->tokenizer->tokenize('12-(    (2  +339)  /7) *      4756098321'),  [
+        $this->assertEquals($this->tokenizer->tokenize('12-(    (2  +339)  /7) *      47560^98321'),  [
             new NumToken(1, '12'),
             new MinusToken(3),
             new LParToken(4),
@@ -142,7 +148,9 @@ class TokenizerTest extends Unit
             new NumToken(21, '7'),
             new RParToken(22),
             new MulToken(24),
-            new NumToken(31, '4756098321')
+            new NumToken(31, '47560'),
+            new PowToken(36),
+            new NumToken(37, '98321')
         ]);
     }
 

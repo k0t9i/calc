@@ -62,7 +62,7 @@ abstract class Token
 
     /**
      * Token position in expression
-     * 
+     *
      * @return integer
      */
     public function getPosition()
@@ -105,6 +105,7 @@ abstract class Token
             self::registerTokenType(new MinusToken(0));
             self::registerTokenType(new MulToken(0));
             self::registerTokenType(new DivToken(0));
+            self::registerTokenType(new PowToken(0));
             self::registerTokenType(new LParToken(0));
             self::registerTokenType(new RParToken(0));
         }
