@@ -35,6 +35,9 @@ class DivToken extends OperatorToken
         return false;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getPrecedence()
     {
         return 2;

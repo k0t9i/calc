@@ -2,6 +2,11 @@
 
 namespace app\models\tokens;
 
+/**
+ * Class OperatorToken
+ *
+ * @package app\models\tokens
+ */
 abstract class OperatorToken extends Token
 {
     const ASSOCIATIVE_LEFT = 'associativeLeft';
@@ -49,12 +54,12 @@ abstract class OperatorToken extends Token
      *
      * @return integer
      */
-    public abstract function getPrecedence();
+     abstract public function getPrecedence();
 
     /**
      * Operator associativity: OperatorToken::ASSOCIATIVE_LEFT, OperatorToken::ASSOCIATIVE_RIGHT
      *
      * @return string
      */
-    public abstract function getAssociativity();
+    abstract public function getAssociativity();
 }
