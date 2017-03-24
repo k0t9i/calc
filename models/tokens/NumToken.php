@@ -15,7 +15,7 @@ class NumToken extends Token
      */
     protected function doGetValue(array $args)
     {
-        return $this->_value;
+        return $this->value;
     }
 
     /**

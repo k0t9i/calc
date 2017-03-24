@@ -14,19 +14,19 @@ abstract class Token
      *
      * @var string
      */
-    protected $_value;
+    protected $value;
 
     /**
      * Token position in expression
      *
      * @var integer
      */
-    private $_position;
+    private $position;
 
     /**
      * @var Token[] Existing token types
      */
-    private static $_tokenTypes = [];
+    private static $tokenTypes = [];
 
     /**
      * Token constructor.
@@ -40,9 +40,9 @@ abstract class Token
             throw new \InvalidArgumentException();
         }
         if ($this->requireValue()) {
-            $this->_value = $value;
+            $this->value = $value;
         }
-        $this->_position = (int) $position;
+        $this->position = (int) $position;
     }
 
     /**
@@ -67,7 +67,7 @@ abstract class Token
      */
     public function getPosition()
     {
-        return $this->_position;
+        return $this->position;
     }
 
     /**
@@ -99,7 +99,7 @@ abstract class Token
      */
     public function getLexeme()
     {
-        return $this->_value;
+        return $this->value;
     }
 
     /**
@@ -119,7 +119,7 @@ abstract class Token
      */
     private static function registerTokenTypes()
     {
-        if (!self::$_tokenTypes) {
+        if (!self::$tokenTypes) {
             self::registerTokenType(new NumToken(0, 0));
             self::registerTokenType(new PlusToken(0));
             self::registerTokenType(new MinusToken(0));
@@ -130,7 +130,7 @@ abstract class Token
             self::registerTokenType(new RParToken(0));
         }
 
-        return self::$_tokenTypes;
+        return self::$tokenTypes;
     }
 
     /**
@@ -140,7 +140,7 @@ abstract class Token
      */
     private static function registerTokenType(Token $token)
     {
-        self::$_tokenTypes[$token->getLexemeFullRegExp()] = $token;
+        self::$tokenTypes[$token->getLexemeFullRegExp()] = $token;
     }
 
     /**

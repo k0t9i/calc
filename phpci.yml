@@ -2,6 +2,7 @@ build_settings:
     ignore:
         - "vendor"
         - "tests"
+        - "web"
 
 setup:
     composer:
