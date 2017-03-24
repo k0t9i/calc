@@ -16,7 +16,7 @@ class RParToken extends Token
      */
     protected function doGetValue(array $args)
     {
-        // TODO: Implement doGetValue() method.
+        return null;
     }
 
     /**
