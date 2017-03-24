@@ -7,7 +7,7 @@ namespace app\models\tokens;
  *
  * @package app\models\tokens
  */
-class MinusToken extends Token
+class MinusToken extends OperatorToken
 {
 
     /**
@@ -40,5 +40,10 @@ class MinusToken extends Token
     protected function getLexemeRegExp()
     {
         return '\-';
+    }
+
+    public function getPriority()
+    {
+        return 1;
     }
 }

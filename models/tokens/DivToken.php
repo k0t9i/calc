@@ -7,7 +7,7 @@ namespace app\models\tokens;
  *
  * @package app\models\tokens
  */
-class DivToken extends Token
+class DivToken extends OperatorToken
 {
 
     /**
@@ -40,5 +40,10 @@ class DivToken extends Token
     protected function getLexemeRegExp()
     {
         return '\/';
+    }
+
+    public function getPriority()
+    {
+        return 2;
     }
 }

@@ -21,7 +21,7 @@ abstract class Token
      *
      * @var integer
      */
-    protected $_position;
+    private $_position;
 
     /**
      * @var Token[] Existing token types
@@ -48,7 +48,7 @@ abstract class Token
     /**
      * Call child method doGetValue
      *
-     * @return mixed
+     * @return string
      */
     public function getValue()
     {
@@ -58,6 +58,16 @@ abstract class Token
         }
 
         return $this->doGetValue($args);
+    }
+
+    /**
+     * Token position in expression
+     * 
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->_position;
     }
 
     /**

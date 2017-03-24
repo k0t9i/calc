@@ -7,7 +7,7 @@ namespace app\models\tokens;
  *
  * @package app\models\tokens
  */
-class PlusToken extends Token
+class PlusToken extends OperatorToken
 {
 
     /**
@@ -40,5 +40,10 @@ class PlusToken extends Token
     protected function getLexemeRegExp()
     {
         return '\+';
+    }
+
+    public function getPriority()
+    {
+        return 1;
     }
 }
