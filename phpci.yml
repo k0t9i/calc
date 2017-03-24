@@ -9,6 +9,7 @@ setup:
         action: "install"
 
 test:
+    technical_debt:
     php_mess_detector:
         allow_failures: true
     php_code_sniffer:
