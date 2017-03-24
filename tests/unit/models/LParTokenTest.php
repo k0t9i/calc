@@ -9,6 +9,6 @@ class LParTokenTest extends Unit
 {
     public function testNotRequiresValue()
     {
-        new LParToken();
+        new LParToken(1);
     }
 }

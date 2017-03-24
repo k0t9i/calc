@@ -9,6 +9,6 @@ class MulTokenTest extends Unit
 {
     public function testNotRequiresValue()
     {
-        new MulToken();
+        new MulToken(1);
     }
 }

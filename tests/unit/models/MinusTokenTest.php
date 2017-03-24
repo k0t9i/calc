@@ -9,6 +9,6 @@ class MinusTokenTest extends Unit
 {
     public function testNotRequiresValue()
     {
-        new MinusToken();
+        new MinusToken(1);
     }
 }

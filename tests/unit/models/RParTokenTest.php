@@ -9,6 +9,6 @@ class RParTokenTest extends Unit
 {
     public function testNotRequiresValue()
     {
-        new RParToken();
+        new RParToken(1);
     }
 }

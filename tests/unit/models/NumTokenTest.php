@@ -10,6 +10,6 @@ class NumTokenTest extends Unit
     public function testRequiresValue()
     {
         $this->expectException(\InvalidArgumentException::class);
-        new NumToken();
+        new NumToken(1);
     }
 }

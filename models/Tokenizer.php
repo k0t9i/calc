@@ -17,10 +17,10 @@ class Tokenizer
         $result = [];
         $lexemes = $this->parseLexemes($string);
         foreach ($lexemes as $lexeme) {
-            $value = $lexeme;
+            $value = $lexeme->getValue();
             foreach (Token::getTokenTypes() as $lexemeRegExp => $proto) {
-                if ($this->getFirstLexeme($lexeme, $lexemeRegExp) !== false) {
-                    $result[] = $proto->create($value);
+                if ($this->getFirstLexeme($value, $lexemeRegExp) !== false) {
+                    $result[] = $proto->create($lexeme->getPosition(), $lexeme->getValue());
                     break;
                 }
             }
@@ -33,7 +33,7 @@ class Tokenizer
      * Parse input string into list of lexemes
      *
      * @param string $string Input string
-     * @return array List of lexemes from input string
+     * @return Lexeme[] List of lexemes from input string
      */
     public function parseLexemes($string)
     {
@@ -58,7 +58,7 @@ class Tokenizer
      *
      * @param string $string Input string
      * @param string $lexemeRegExp Lexeme regular expression
-     * @return bool|mixed Lexeme or false if lexeme not dound
+     * @return bool|string Lexeme or false if lexeme not dound
      */
     public function getFirstLexeme(&$string, $lexemeRegExp)
     {
@@ -78,7 +78,7 @@ class Tokenizer
      *
      * @param string $string Input string
      * @param int $initLength Initial length of string
-     * @return bool|mixed Lexeme or false if lexeme not found
+     * @return bool|Lexeme Lexeme object or false if lexeme not found
      * @throws UnknownLexemeException if found unknown lexeme
      */
     private function searchLexemes(&$string, $initLength)
@@ -90,14 +90,15 @@ class Tokenizer
         }
 
         $lengthBefore = strlen($string);
+        $position = $initLength - $lengthBefore + 1;
         foreach (Token::getTokenTypes() as $lexemeRegExp => $_) {
             $lexeme = $this->getFirstLexeme($string, $lexemeRegExp);
             if ($lexeme !== false) {
-                return $lexeme;
+                return new Lexeme($lexeme, $position);
             }
         }
         if ($lengthBefore == strlen($string)) {
-            throw new UnknownLexemeException('Unknown lexeme "' . $string[0] . '" at position ' . ($initLength - $lengthBefore + 1));
+            throw new UnknownLexemeException('Unknown lexeme "' . $string[0] . '" at position ' . ($position));
         }
 
         return false;

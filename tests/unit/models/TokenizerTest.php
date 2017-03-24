@@ -2,6 +2,7 @@
 
 namespace tests\models;
 
+use app\models\Lexeme;
 use app\models\tokens\DivToken;
 use app\models\tokens\LParToken;
 use app\models\tokens\MinusToken;
@@ -33,42 +34,53 @@ class TokenizerTest extends Unit
 
     public function testParseLexemesEmpty()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes('') === []);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes(''), []);
     }
 
     public function testParseLexemesOnlyOneSpace()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes(' ') === []);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes(' '), []);
     }
     
     public function testParseLexemesNumber()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes('1') === ['1']);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('1'), [new Lexeme('1', 1)]);
     }
 
     public function testParseLexemesLongNumber()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes('123') === ['123']);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('123'), [new Lexeme('123', 1)]);
     }
 
     public function testParseLexemesFloatNumber()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes('13333.24444') === ['13333.24444']);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('13333.24444'), [new Lexeme('13333.24444', 1)]);
+    }
+
+    public function testParseLexemesLexemePosition()
+    {
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('123-2'), [
+            new Lexeme('123', 1), new Lexeme('-', 4), new Lexeme('2', 5)
+        ]);
     }
 
     public function testParseLexemesSpaceDivideLexeme()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes('1 2') === ['1', '2']);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('1 2'), [new Lexeme('1', 1), new Lexeme('2', 3)]);
     }
 
     public function testParseLexemesSimplePlus()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes('1+2') === ['1', '+', '2']);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('1+2'), [
+            new Lexeme('1', 1), new Lexeme('+', 2), new Lexeme('2', 3)
+        ]);
     }
 
     public function testParseLexemesPlus()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes('132+17') === ['132', '+', '17']);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('132+17'), [
+            new Lexeme('132', 1), new Lexeme('+', 4), new Lexeme('17', 5)
+        ]);
     }
 
     public function testParseLexemesUnknownLexeme()
@@ -79,27 +91,43 @@ class TokenizerTest extends Unit
 
     public function testParseLexemesMinus()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes('554-1024') === ['554', '-', '1024']);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('554-1024'), [
+            new Lexeme('554', 1), new Lexeme('-', 4), new Lexeme('1024', 5)
+        ]);
     }
 
     public function testParseLexemesMultiply()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes('337*123') === ['337', '*', '123']);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('337*123'), [
+            new Lexeme('337', 1), new Lexeme('*', 4), new Lexeme('123', 5)
+        ]);
     }
 
     public function testParseLexemesDivide()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes('654/19') === ['654', '/', '19']);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('654/19'), [
+            new Lexeme('654', 1), new Lexeme('/', 4), new Lexeme('19', 5)
+        ]);
     }
 
     public function testParseLexemesParenthesis()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes('(23-(33))') === ['(', '23', '-', '(', '33', ')', ')']);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('(23-(33))'), [
+            new Lexeme('(', 1),
+            new Lexeme('23', 2),
+            new Lexeme('-', 4),
+            new Lexeme('(', 5),
+            new Lexeme('33', 6),
+            new Lexeme(')', 8),
+            new Lexeme(')', 9)
+        ]);
     }
 
     public function testParseLexemesIgnoreSpaces()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes(' 27  -          19      ') === ['27', '-', '19']);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes(' 27  -          19      '), [
+            new Lexeme('27', 2), new Lexeme('-', 6), new Lexeme('19', 17)
+        ]);
     }
 
     public function testParseLexemesUnknownLexemePosition3()
@@ -122,85 +150,103 @@ class TokenizerTest extends Unit
 
     public function testParseLexemesComplex()
     {
-        $this->assertTrue($this->tokenizer->parseLexemes('12-(    (2  +339)  /7) *      4756098321') === ['12', '-', '(', '(', '2', '+', '339', ')', '/', '7', ')', '*', '4756098321']);
+        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('12-(    (2  +339)  /7) *      4756098321'), [
+            new Lexeme('12', 1),
+            new Lexeme('-', 3),
+            new Lexeme('(', 4),
+            new Lexeme('(', 9),
+            new Lexeme('2', 10),
+            new Lexeme('+', 13),
+            new Lexeme('339', 14),
+            new Lexeme(')', 17),
+            new Lexeme('/', 20),
+            new Lexeme('7', 21),
+            new Lexeme(')', 22),
+            new Lexeme('*', 24),
+            new Lexeme('4756098321', 31)
+        ]);
     }
 
     public function testTokenizeEmpty()
     {
-        $this->assertTrue($this->tokenizer->tokenize('') === []);
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize(''), []);
     }
 
     public function testTokenizeOnlyOneSpace()
     {
-        $this->assertTrue($this->tokenizer->tokenize(' ') === []);
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize(' '), []);
     }
 
     public function testTokenizeNumber()
     {
-        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('123'), [new NumToken('123')]);
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('123'), [new NumToken(1, '123')]);
     }
 
     public function testTokenizeFloatNumber()
     {
-        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('123.23423'), [new NumToken('123.23423')]);
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('123.23423'), [new NumToken(1, '123.23423')]);
     }
 
     public function testTokenizeSpaceDivideLexeme()
     {
-        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('1 2 3'), [new NumToken('1'), new NumToken(2), new NumToken(3)]);
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('1 2 3'), [
+            new NumToken(1, '1'), new NumToken(3, '2'), new NumToken(5, '3')
+        ]);
     }
 
     public function testTokenizePlus()
     {
-        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('+'), [new PlusToken()]);
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('+'), [new PlusToken(1)]);
     }
 
     public function testTokenizeMinus()
     {
-        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('-'), [new MinusToken()]);
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('-'), [new MinusToken(1)]);
     }
 
     public function testTokenizeMultiply()
     {
-        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('*'), [new MulToken()]);
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('*'), [new MulToken(1)]);
     }
 
     public function testTokenizeDivide()
     {
-        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('/'), [new DivToken()]);
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('/'), [new DivToken(1)]);
     }
 
     public function testTokenizeLeftParentheses()
     {
-        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('('), [new LParToken()]);
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize('('), [new LParToken(1)]);
     }
 
     public function testTokenizeRightParentheses()
     {
-        $this->assertEqualArrayOfObject($this->tokenizer->tokenize(')'), [new RParToken()]);
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize(')'), [new RParToken(1)]);
     }
 
     public function testTokenizeIgnoreSpaces()
     {
-        $this->assertEqualArrayOfObject($this->tokenizer->tokenize(' 27  -          19      '), [new NumToken(27), new MinusToken(), new NumToken(19)]);
+        $this->assertEqualArrayOfObject($this->tokenizer->tokenize(' 27  -          19      '), [
+            new NumToken(2, '27'), new MinusToken(6), new NumToken(17, '19')
+        ]);
     }
 
     public function testTokenizeComplex()
     {
         $this->assertEqualArrayOfObject($this->tokenizer->tokenize('12-(    (2  +339)  /7) *      4756098321'),  [
-            new NumToken(12),
-            new MinusToken(),
-            new LParToken(),
-            new LParToken(),
-            new NumToken(2),
-            new PlusToken(),
-            new NumToken(339),
-            new RParToken(),
-            new DivToken(),
-            new NumToken(7),
-            new RParToken(),
-            new MulToken(),
-            new NumToken(4756098321)
+            new NumToken(1, '12'),
+            new MinusToken(3),
+            new LParToken(4),
+            new LParToken(9),
+            new NumToken(10, '2'),
+            new PlusToken(13),
+            new NumToken(14, '339'),
+            new RParToken(17),
+            new DivToken(20),
+            new NumToken(21, '7'),
+            new RParToken(22),
+            new MulToken(24),
+            new NumToken(31, '4756098321')
         ]);
     }
 

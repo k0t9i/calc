@@ -9,6 +9,6 @@ class DivTokenTest extends Unit
 {
     public function testNotRequiresValue()
     {
-        new DivToken();
+        new DivToken(1);
     }
 }

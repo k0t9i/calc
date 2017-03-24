@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models\tokens;
+use app\models\Lexeme;
 
 /**
  * Parent class for all tokens
@@ -9,15 +10,32 @@ namespace app\models\tokens;
  */
 abstract class Token
 {
+    /**
+     * Token value
+     *
+     * @var string
+     */
     protected $_value;
+
+    /**
+     * Token position
+     *
+     * @var integer
+     */
+    protected $_position;
+
+    /**
+     * @var Token[] Existing token types
+     */
     private static $_tokenTypes = [];
 
     /**
      * Token constructor.
      *
-     * @param mixed $value Token value
+     * @param integer $position Token position
+     * @param null|String $value Token value
      */
-    final public function __construct($value = null)
+    final public function __construct($position, $value = null)
     {
         if ($this->requireValue() !== false && is_null($value)) {
             throw new \InvalidArgumentException();
@@ -25,6 +43,7 @@ abstract class Token
         if ($this->requireValue()) {
             $this->_value = $value;
         }
+        $this->_position = (int) $position;
     }
 
     /**
@@ -45,12 +64,13 @@ abstract class Token
     /**
      * Create new token
      *
-     * @param mixed $value Token value
+     * @param integer $position Token position
+     * @param null|String $value Token value
      * @return static
      */
-    public function create($value = null)
+    public function create($position, $value = null)
     {
-        return new static($value);
+        return new static($position, $value);
     }
 
     /**
@@ -71,13 +91,13 @@ abstract class Token
     private static function registerTokenTypes()
     {
         if (!self::$_tokenTypes) {
-            self::registerTokenType(new NumToken(0));
-            self::registerTokenType(new PlusToken());
-            self::registerTokenType(new MinusToken());
-            self::registerTokenType(new MulToken());
-            self::registerTokenType(new DivToken());
-            self::registerTokenType(new LParToken());
-            self::registerTokenType(new RParToken());
+            self::registerTokenType(new NumToken(0, 0));
+            self::registerTokenType(new PlusToken(0));
+            self::registerTokenType(new MinusToken(0));
+            self::registerTokenType(new MulToken(0));
+            self::registerTokenType(new DivToken(0));
+            self::registerTokenType(new LParToken(0));
+            self::registerTokenType(new RParToken(0));
         }
 
         return self::$_tokenTypes;
