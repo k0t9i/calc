@@ -16,7 +16,7 @@ class PostfixNotationCalculator
             $current = array_shift($tokens);
             if ($current instanceof NumToken) {
                 $stack->push($current);
-            } else if ($current instanceof OperatorToken) {
+            } elseif ($current instanceof OperatorToken) {
                 $args = [];
                 for ($i = 0; $i < $current->argsCount(); $i++) {
                     if ($stack->count() == 0) {

@@ -35,7 +35,6 @@ class PostfixNotation
                 $stack->push($current);
             } elseif ($current instanceof RParToken) {
                 $this->popTokensWhileNotFoundLeftParentheses($stack, $output);
-
             } elseif ($current instanceof OperatorToken) {
                 $this->popTokensWhileOperatorGoBeforeCurrent($stack, $current, $output);
             }
