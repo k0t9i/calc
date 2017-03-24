@@ -8,7 +8,11 @@
 
 namespace app\models;
 
-
+/**
+ * Class Lexeme
+ *
+ * @package app\models
+ */
 class Lexeme
 {
     /**
@@ -18,7 +22,7 @@ class Lexeme
      */
     private $_value;
     /**
-     * Lexeme position
+     * Lexeme position in expression
      *
      * @return integer
      */
@@ -28,7 +32,7 @@ class Lexeme
      * Lexeme constructor.
      *
      * @param string $value Lexeme value
-     * @param integer $position Lexeme position
+     * @param integer $position Lexeme position in expression
      */
     public function __construct($value, $position)
     {

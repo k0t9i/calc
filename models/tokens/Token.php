@@ -1,7 +1,6 @@
 <?php
 
 namespace app\models\tokens;
-use app\models\Lexeme;
 
 /**
  * Parent class for all tokens
@@ -18,7 +17,7 @@ abstract class Token
     protected $_value;
 
     /**
-     * Token position
+     * Token position in expression
      *
      * @var integer
      */
@@ -32,7 +31,7 @@ abstract class Token
     /**
      * Token constructor.
      *
-     * @param integer $position Token position
+     * @param integer $position Token position in expression
      * @param null|String $value Token value
      */
     final public function __construct($position, $value = null)
@@ -64,7 +63,7 @@ abstract class Token
     /**
      * Create new token
      *
-     * @param integer $position Token position
+     * @param integer $position Token position in expression
      * @param null|String $value Token value
      * @return static
      */

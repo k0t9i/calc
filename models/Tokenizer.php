@@ -12,6 +12,12 @@ use app\models\tokens\Token;
  */
 class Tokenizer
 {
+    /**
+     * Parse input string into list of tokens
+     *
+     * @param string $string Input string
+     * @return Token[] List of tokens from input string
+     */
     public function tokenize($string)
     {
         $result = [];
