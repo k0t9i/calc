@@ -48,11 +48,11 @@ abstract class Token
     /**
      * Call child method doGetValue
      *
+     * @param NumToken[] $args Token arguments for getting value
      * @return string
      */
-    public function getValue()
+    public function getValue(array $args = [])
     {
-        $args = func_get_args();
         if ($this->argsCount() != count($args)) {
             throw new \InvalidArgumentException();
         }
@@ -126,7 +126,7 @@ abstract class Token
     /**
      * Return concrete token value
      *
-     * @param array $args
+     * @param NumToken[] $args
      * @return mixed
      */
     abstract protected function doGetValue(array $args);
@@ -136,7 +136,7 @@ abstract class Token
      *
      * @return integer
      */
-    abstract protected function argsCount();
+    abstract public function argsCount();
 
     /**
      * Is value required

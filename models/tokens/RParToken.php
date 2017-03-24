@@ -21,9 +21,9 @@ class RParToken extends Token
     /**
      * @inheritdoc
      */
-    protected function argsCount()
+    public function argsCount()
     {
-        // TODO: Implement argsCount() method.
+        return 0;
     }
 
     /**

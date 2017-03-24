@@ -2,27 +2,27 @@
 
 namespace tests\models;
 
-use app\models\tokens\MulToken;
 use app\models\tokens\NumToken;
+use app\models\tokens\PowToken;
 use Codeception\Test\Unit;
 
-class MulTokenTest extends Unit
+class PowTokenTest extends Unit
 {
     public function testNotRequiresValue()
     {
-        new MulToken(1);
+        new PowToken(1);
     }
 
     public function testRequireTwoArgs()
     {
-        $token = new MulToken(0);
+        $token = new PowToken(0);
         $this->assertTrue($token->argsCount() == 2);
     }
 
     public function testGetValue()
     {
-        $token = new MulToken(0);
-        $args = [new NumToken(0, '5'), new NumToken(0, '3')];
-        $this->assertTrue($token->getValue($args) == 15);
+        $token = new PowToken(0);
+        $args = [new NumToken(0, '2'), new NumToken(0, '3')];
+        $this->assertTrue($token->getValue($args) == 8);
     }
 }

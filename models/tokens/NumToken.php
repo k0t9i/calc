@@ -15,15 +15,15 @@ class NumToken extends Token
      */
     protected function doGetValue(array $args)
     {
-        // TODO: Implement doGetValue() method.
+        return $this->_value;
     }
 
     /**
      * @inheritdoc
      */
-    protected function argsCount()
+    public function argsCount()
     {
-        // TODO: Implement argsCount() method.
+        return 0;
     }
 
     /**
