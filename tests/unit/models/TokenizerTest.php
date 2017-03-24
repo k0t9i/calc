@@ -2,7 +2,6 @@
 
 namespace tests\models;
 
-use app\models\Lexeme;
 use app\models\tokens\DivToken;
 use app\models\tokens\LParToken;
 use app\models\tokens\MinusToken;
@@ -30,141 +29,6 @@ class TokenizerTest extends Unit
     protected function _before()
     {
         $this->tokenizer = new Tokenizer();
-    }
-
-    public function testParseLexemesEmpty()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes(''), []);
-    }
-
-    public function testParseLexemesOnlyOneSpace()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes(' '), []);
-    }
-    
-    public function testParseLexemesNumber()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('1'), [new Lexeme('1', 1)]);
-    }
-
-    public function testParseLexemesLongNumber()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('123'), [new Lexeme('123', 1)]);
-    }
-
-    public function testParseLexemesFloatNumber()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('13333.24444'), [new Lexeme('13333.24444', 1)]);
-    }
-
-    public function testParseLexemesLexemePosition()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('123-2'), [
-            new Lexeme('123', 1), new Lexeme('-', 4), new Lexeme('2', 5)
-        ]);
-    }
-
-    public function testParseLexemesSpaceDivideLexeme()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('1 2'), [new Lexeme('1', 1), new Lexeme('2', 3)]);
-    }
-
-    public function testParseLexemesSimplePlus()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('1+2'), [
-            new Lexeme('1', 1), new Lexeme('+', 2), new Lexeme('2', 3)
-        ]);
-    }
-
-    public function testParseLexemesPlus()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('132+17'), [
-            new Lexeme('132', 1), new Lexeme('+', 4), new Lexeme('17', 5)
-        ]);
-    }
-
-    public function testParseLexemesUnknownLexeme()
-    {
-        $this->expectException(UnknownLexemeException::class);
-        $this->tokenizer->parseLexemes('13~+17');
-    }
-
-    public function testParseLexemesMinus()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('554-1024'), [
-            new Lexeme('554', 1), new Lexeme('-', 4), new Lexeme('1024', 5)
-        ]);
-    }
-
-    public function testParseLexemesMultiply()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('337*123'), [
-            new Lexeme('337', 1), new Lexeme('*', 4), new Lexeme('123', 5)
-        ]);
-    }
-
-    public function testParseLexemesDivide()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('654/19'), [
-            new Lexeme('654', 1), new Lexeme('/', 4), new Lexeme('19', 5)
-        ]);
-    }
-
-    public function testParseLexemesParenthesis()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('(23-(33))'), [
-            new Lexeme('(', 1),
-            new Lexeme('23', 2),
-            new Lexeme('-', 4),
-            new Lexeme('(', 5),
-            new Lexeme('33', 6),
-            new Lexeme(')', 8),
-            new Lexeme(')', 9)
-        ]);
-    }
-
-    public function testParseLexemesIgnoreSpaces()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes(' 27  -          19      '), [
-            new Lexeme('27', 2), new Lexeme('-', 6), new Lexeme('19', 17)
-        ]);
-    }
-
-    public function testParseLexemesUnknownLexemePosition3()
-    {
-        $this->expectExceptionMessage('position 3');
-        $this->tokenizer->parseLexemes('13~+17');
-    }
-
-    public function testParseLexemesUnknownLexemePosition5()
-    {
-        $this->expectExceptionMessage('position 5');
-        $this->tokenizer->parseLexemes('1343~+17');
-    }
-
-    public function testParseLexemesUnknownLexemeValue()
-    {
-        $this->expectExceptionMessage('lexeme "~"');
-        $this->tokenizer->parseLexemes('13~+17');
-    }
-
-    public function testParseLexemesComplex()
-    {
-        $this->assertEqualArrayOfObject($this->tokenizer->parseLexemes('12-(    (2  +339)  /7) *      4756098321'), [
-            new Lexeme('12', 1),
-            new Lexeme('-', 3),
-            new Lexeme('(', 4),
-            new Lexeme('(', 9),
-            new Lexeme('2', 10),
-            new Lexeme('+', 13),
-            new Lexeme('339', 14),
-            new Lexeme(')', 17),
-            new Lexeme('/', 20),
-            new Lexeme('7', 21),
-            new Lexeme(')', 22),
-            new Lexeme('*', 24),
-            new Lexeme('4756098321', 31)
-        ]);
     }
 
     public function testTokenizeEmpty()
@@ -197,6 +61,30 @@ class TokenizerTest extends Unit
     public function testTokenizePlus()
     {
         $this->assertEqualArrayOfObject($this->tokenizer->tokenize('+'), [new PlusToken(1)]);
+    }
+
+    public function testTokenizeUnknownLexeme()
+    {
+        $this->expectException(UnknownLexemeException::class);
+        $this->tokenizer->tokenize('13~+17');
+    }
+
+    public function testTokenizeUnknownLexemePosition3()
+    {
+        $this->expectExceptionMessage('position 3');
+        $this->tokenizer->tokenize('13~+17');
+    }
+
+    public function testTokenizeUnknownLexemePosition5()
+    {
+        $this->expectExceptionMessage('position 5');
+        $this->tokenizer->tokenize('1343~+17');
+    }
+
+    public function testTokenizeUnknownLexemeValue()
+    {
+        $this->expectExceptionMessage('lexeme "~"');
+        $this->tokenizer->tokenize('13~+17');
     }
 
     public function testTokenizeMinus()

@@ -20,39 +20,16 @@ class Tokenizer
      */
     public function tokenize($string)
     {
-        $result = [];
-        $lexemes = $this->parseLexemes($string);
-        foreach ($lexemes as $lexeme) {
-            $value = $lexeme->getValue();
-            foreach (Token::getTokenTypes() as $lexemeRegExp => $proto) {
-                if ($this->getFirstLexeme($value, $lexemeRegExp) !== false) {
-                    $result[] = $proto->create($lexeme->getPosition(), $lexeme->getValue());
-                    break;
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Parse input string into list of lexemes
-     *
-     * @param string $string Input string
-     * @return Lexeme[] List of lexemes from input string
-     */
-    public function parseLexemes($string)
-    {
         $input = $string;
         $result = [];
 
         $initLength = strlen($input);
         while (strlen($input) > 0) {
-            $lexeme = $this->searchLexemes($input, $initLength);
-            if ($lexeme === false) {
+            $token = $this->searchTokens($input, $initLength);
+            if ($token === false) {
                 break;
             }
-            $result[] = $lexeme;
+            $result[] = $token;
         }
 
         return $result;
@@ -64,7 +41,7 @@ class Tokenizer
      *
      * @param string $string Input string
      * @param string $lexemeRegExp Lexeme regular expression
-     * @return bool|string Lexeme or false if lexeme not dound
+     * @return bool|string Lexeme or false if lexeme not found
      */
     public function getFirstLexeme(&$string, $lexemeRegExp)
     {
@@ -79,15 +56,15 @@ class Tokenizer
     }
 
     /**
-     * Searches all lexemes in input string and return first of it, or return false if lexeme not found
+     * Searches all tokens in input string and return first of it, or return false if lexeme not found
      * Changes input string
      *
      * @param string $string Input string
      * @param int $initLength Initial length of string
-     * @return bool|Lexeme Lexeme object or false if lexeme not found
+     * @return bool|Token Token object or false if lexeme not found
      * @throws UnknownLexemeException if found unknown lexeme
      */
-    private function searchLexemes(&$string, $initLength)
+    private function searchTokens(&$string, $initLength)
     {
         //Ignore leading spaces
         $string = ltrim($string, ' ');
@@ -97,10 +74,10 @@ class Tokenizer
 
         $lengthBefore = strlen($string);
         $position = $initLength - $lengthBefore + 1;
-        foreach (Token::getTokenTypes() as $lexemeRegExp => $_) {
+        foreach (Token::getTokenTypes() as $lexemeRegExp => $proto) {
             $lexeme = $this->getFirstLexeme($string, $lexemeRegExp);
             if ($lexeme !== false) {
-                return new Lexeme($lexeme, $position);
+                return $proto->create($position, $lexeme);
             }
         }
         if ($lengthBefore == strlen($string)) {
