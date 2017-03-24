@@ -7,12 +7,12 @@ abstract class OperatorToken extends Token
     const ASSOCIATIVE_LEFT = 'associativeLeft';
     const ASSOCIATIVE_RIGHT = 'associativeRight';
 
-    public function comparePriority(OperatorToken $other)
+    public function comparePrecedence(OperatorToken $other)
     {
-        if ($this->getPriority() > $other->getPriority()) {
+        if ($this->getPrecedence() > $other->getPrecedence()) {
             return 1;
         }
-        if ($this->getPriority() < $other->getPriority()) {
+        if ($this->getPrecedence() < $other->getPrecedence()) {
             return -1;
         }
         return 0;
@@ -28,6 +28,6 @@ abstract class OperatorToken extends Token
         return $this->getAssociativity() == self::ASSOCIATIVE_LEFT;
     }
 
-    abstract function getPriority();
+    abstract function getPrecedence();
     abstract function getAssociativity();
 }

@@ -42,7 +42,7 @@ class MulToken extends OperatorToken
         return '\*';
     }
 
-    public function getPriority()
+    public function getPrecedence()
     {
         return 2;
     }
