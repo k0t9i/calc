@@ -43,16 +43,25 @@ class PlusToken extends OperatorToken
         return '\\' . $this->getLexeme();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getPrecedence()
     {
         return 1;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getAssociativity()
     {
         return self::ASSOCIATIVE_LEFT;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getLexeme()
     {
         return self::LEXEME;

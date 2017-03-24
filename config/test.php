@@ -6,10 +6,10 @@ $params = require(__DIR__ . '/params.php');
  */
 return [
     'id' => 'calc-tests',
-    'basePath' => dirname(__DIR__),    
+    'basePath' => dirname(__DIR__),
     'language' => 'en-US',
     'components' => [
-        'assetManager' => [            
+        'assetManager' => [
             'basePath' => __DIR__ . '/../web/assets',
         ],
         'urlManager' => [
@@ -24,7 +24,7 @@ return [
                 'domain' => 'localhost',
             ],
             */
-        ],        
+        ],
     ],
     'params' => $params,
 ];

@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+
 use app\models\tokens\Token;
 
 /**

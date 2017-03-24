@@ -102,6 +102,11 @@ abstract class Token
         return $this->_value;
     }
 
+    /**
+     * Lexeme full regular expression for concrete Token: '/^' . RegExp . '/'
+     *
+     * @return string
+     */
     public function getLexemeFullRegExp()
     {
         return '/^' . $this->getLexemeRegExp() . '/';

@@ -2,6 +2,11 @@
 
 namespace app\models\tokens;
 
+/**
+ * Power token
+ *
+ * @package app\models\tokens
+ */
 class PowToken extends OperatorToken
 {
     const LEXEME = '^';
@@ -30,11 +35,17 @@ class PowToken extends OperatorToken
         return false;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getPrecedence()
     {
         return 3;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getAssociativity()
     {
         return self::ASSOCIATIVE_RIGHT;
@@ -48,9 +59,11 @@ class PowToken extends OperatorToken
         return '\\' . $this->getLexeme();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getLexeme()
     {
         return self::LEXEME;
     }
-
 }

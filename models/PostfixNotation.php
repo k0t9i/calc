@@ -20,7 +20,7 @@ class PostfixNotation
      *
      * @param Token[] $tokens
      * @return Token[]
-     * @throws \Exception If not found left parentheses in stack (@see PostfixNotation::popTokensWhileNotFoundLeftParentheses)
+     * @throws \Exception If not found left parentheses in stack
      */
     public function convert(array $tokens)
     {

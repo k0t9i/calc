@@ -4,9 +4,22 @@ namespace app\models;
 
 use app\models\tokens\NumToken;
 use app\models\tokens\OperatorToken;
+use app\models\tokens\Token;
 
+/**
+ * Class PostfixNotationCalculator
+ *
+ * @package app\models
+ */
 class PostfixNotationCalculator
 {
+    /**
+     * Calculate expression in postfix notation
+     *
+     * @param Token[] $tokens List of tokens in postfix notation
+     * @return float Result of expression
+     * @throws CalculateSyntaxException If expression has syntax error
+     */
     public function calculate(array $tokens)
     {
         $result = 0;
@@ -20,7 +33,12 @@ class PostfixNotationCalculator
                 $args = [];
                 for ($i = 0; $i < $current->argsCount(); $i++) {
                     if ($stack->count() == 0) {
-                        throw new CalculateSyntaxException('Syntax error at position ' . $current->getPosition() . ' near lexeme "' . $current->getLexeme() . '"');
+                        throw new CalculateSyntaxException(
+                            'Syntax error at position ' .
+                            $current->getPosition() .
+                            ' near lexeme "' .
+                            $current->getLexeme() . '"'
+                        );
                     }
                     $args[] = $stack->pop();
                 }

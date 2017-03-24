@@ -4,7 +4,7 @@ namespace app\models\tokens;
 
 /**
  * Left parentheses token
- * 
+ *
  * @package app\models\tokens
  */
 class LParToken extends Token
@@ -43,6 +43,9 @@ class LParToken extends Token
         return '\\' . $this->getLexeme();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getLexeme()
     {
         return self::LEXEME;

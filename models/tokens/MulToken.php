@@ -35,11 +35,17 @@ class MulToken extends OperatorToken
         return false;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getPrecedence()
     {
         return 2;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getAssociativity()
     {
         return self::ASSOCIATIVE_LEFT;
@@ -53,6 +59,9 @@ class MulToken extends OperatorToken
         return '\\' . $this->getLexeme();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getLexeme()
     {
         return self::LEXEME;

@@ -43,6 +43,9 @@ class RParToken extends Token
         return '\\' . $this->getLexeme();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getLexeme()
     {
         return self::LEXEME;
