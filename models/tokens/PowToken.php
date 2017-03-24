@@ -41,4 +41,9 @@ class PowToken extends OperatorToken
     {
         return 3;
     }
+
+    public function getAssociativity()
+    {
+        return self::ASSOCIATIVE_RIGHT;
+    }
 }

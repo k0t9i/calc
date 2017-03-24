@@ -46,4 +46,9 @@ class DivToken extends OperatorToken
     {
         return 2;
     }
+
+    public function getAssociativity()
+    {
+        return self::ASSOCIATIVE_LEFT;
+    }
 }

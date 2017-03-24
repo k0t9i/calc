@@ -13,6 +13,7 @@ class PostfixNotation
     /**
      * @param Token[] $tokens
      * @return array
+     * @throws \Exception
      */
     public function convert(array $tokens)
     {
@@ -40,12 +41,13 @@ class PostfixNotation
             } elseif ($token instanceof OperatorToken) {
                 if ($stack->count() > 0) {
                     $top = $stack->top();
-                    // TODO Right associative operators
-                    while ($top instanceof OperatorToken && $token->comparePriority($top) <= 0) {
+                    while ($top instanceof OperatorToken && $token->isAssociativeLeft() && $token->comparePriority($top) <= 0 ||
+                        $token->isAssociativeRight() && $token->comparePriority($top) <  0) {
+                        $output[] = $stack->pop();
                         if ($stack->count() == 0) {
                             break;
                         }
-                        $output[] = $stack->pop();
+                        $top = $stack->top();
                     }
                 }
                 $stack->push($token);

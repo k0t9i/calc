@@ -9,6 +9,7 @@ use app\models\tokens\MinusToken;
 use app\models\tokens\MulToken;
 use app\models\tokens\NumToken;
 use app\models\tokens\PlusToken;
+use app\models\tokens\PowToken;
 use Codeception\Test\Unit;
 
 class PostfixNotationTest extends Unit
@@ -58,6 +59,14 @@ class PostfixNotationTest extends Unit
         ]);
     }
 
+    public function testConvertTwoOperatorWithParentensis()
+    {
+        $tokens = $this->tokenizer->tokenize('(2+3-1)');
+        $this->assertEquals($this->notation->convert($tokens), [
+            new NumToken(2, '2'), new NumToken(4, '3'), new PlusToken(3), new NumToken(6, '1'), new MinusToken(5)
+        ]);
+    }
+
     public function testConvertMissingRightParentheses()
     {
         $this->expectException(\Exception::class);
@@ -77,6 +86,14 @@ class PostfixNotationTest extends Unit
         $tokens = $this->tokenizer->tokenize('2+3*1');
         $this->assertEquals($this->notation->convert($tokens), [
             new NumToken(1, '2'), new NumToken(3, '3'), new NumToken(5, '1'), new MulToken(4), new PlusToken(2)
+        ]);
+    }
+
+    public function testConvertTwoOperatorWithDifferentAssociativity()
+    {
+        $tokens = $this->tokenizer->tokenize('2^3^1');
+        $this->assertEquals($this->notation->convert($tokens), [
+            new NumToken(1, '2'), new NumToken(3, '3'), new NumToken(5, '1'), new PowToken(4), new PowToken(2)
         ]);
     }
 }

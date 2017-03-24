@@ -46,4 +46,9 @@ class MinusToken extends OperatorToken
     {
         return 1;
     }
+
+    public function getAssociativity()
+    {
+        return self::ASSOCIATIVE_LEFT;
+    }
 }
