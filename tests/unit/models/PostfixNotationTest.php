@@ -2,7 +2,7 @@
 
 namespace tests\models;
 
-use app\models\calc\PostfixNotation;
+use app\models\calc\PostfixNotationConverter;
 use app\models\calc\Tokenizer;
 use app\models\calc\tokens\DivToken;
 use app\models\calc\tokens\MinusToken;
@@ -20,14 +20,14 @@ class PostfixNotationTest extends Unit
     protected $tokenizer;
 
     /**
-     * @var PostfixNotation
+     * @var PostfixNotationConverter
      */
     protected $notation;
 
     protected function _before()
     {
         $this->tokenizer = new Tokenizer();
-        $this->notation = new PostfixNotation();
+        $this->notation = new PostfixNotationConverter();
     }
 
     public function testConvertEmpty()

@@ -9,11 +9,11 @@ use app\models\calc\tokens\RParToken;
 use app\models\calc\tokens\Token;
 
 /**
- * Class PostfixNotation
+ * Class PostfixNotationConverter
  *
  * @package app\models\calc
  */
-class PostfixNotation
+class PostfixNotationConverter
 {
     /**
      * Convert array of tokens in infix notation to array of tokens in postfix notation with Shunting-yard algorithm

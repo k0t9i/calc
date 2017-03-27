@@ -3,7 +3,7 @@
 namespace tests\models;
 
 use app\models\calc\CalculateSyntaxException;
-use app\models\calc\PostfixNotation;
+use app\models\calc\PostfixNotationConverter;
 use app\models\calc\PostfixNotationCalculator;
 use app\models\calc\Tokenizer;
 use Codeception\Test\Unit;
@@ -16,7 +16,7 @@ class PostfixNotationCalculatorTest extends Unit
     protected $tokenizer;
 
     /**
-     * @var PostfixNotation
+     * @var PostfixNotationConverter
      */
     protected $notation;
 
@@ -28,7 +28,7 @@ class PostfixNotationCalculatorTest extends Unit
     protected function _before()
     {
         $this->tokenizer = new Tokenizer();
-        $this->notation = new PostfixNotation();
+        $this->notation = new PostfixNotationConverter();
         $this->calculator = new PostfixNotationCalculator();
     }
 
