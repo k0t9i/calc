@@ -37,7 +37,7 @@ abstract class Token
     final public function __construct($position, $value = null)
     {
         if ($this->requireValue() !== false && is_null($value)) {
-            throw new \InvalidArgumentException();
+            throw new \InvalidArgumentException('Value required');
         }
         if ($this->requireValue()) {
             $this->value = $value;
@@ -54,7 +54,7 @@ abstract class Token
     public function getValue(array $args = [])
     {
         if ($this->argsCount() != count($args)) {
-            throw new \InvalidArgumentException();
+            throw new \InvalidArgumentException('Invalid args count');
         }
 
         return $this->doGetValue($args);
@@ -128,6 +128,7 @@ abstract class Token
             self::registerTokenType(new PowToken(0));
             self::registerTokenType(new LParToken(0));
             self::registerTokenType(new RParToken(0));
+            self::registerTokenType(new SinToken(0));
         }
 
         return self::$tokenTypes;

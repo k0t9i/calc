@@ -4,6 +4,7 @@ namespace app\models\calc;
 
 use app\models\calc\interfaces\IConverter;
 use app\models\calc\interfaces\ITokenizer;
+use app\models\calc\tokens\FuncToken;
 use app\models\calc\tokens\OperatorToken;
 use app\models\calc\tokens\LParToken;
 use app\models\calc\tokens\NumToken;
@@ -52,6 +53,8 @@ class PostfixNotationConverter implements IConverter
             $current = array_shift($tokens);
             if ($current instanceof NumToken) {
                 $output[] = $current;
+            } elseif ($current instanceof FuncToken) {
+                $stack->push($current);
             } elseif ($current instanceof LParToken) {
                 $stack->push($current);
             } elseif ($current instanceof RParToken) {

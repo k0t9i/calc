@@ -10,6 +10,7 @@ use app\models\calc\tokens\MulToken;
 use app\models\calc\tokens\NumToken;
 use app\models\calc\tokens\PlusToken;
 use app\models\calc\tokens\PowToken;
+use app\models\calc\tokens\SinToken;
 use Codeception\Test\Unit;
 
 class PostfixNotationConverterTest extends Unit
@@ -95,6 +96,13 @@ class PostfixNotationConverterTest extends Unit
         ], $this->notation->convert('2^3^1'));
     }
 
+    public function testConvertSinFunction()
+    {
+        $this->assertEquals([
+            new NumToken(5, '2'), new SinToken(1)
+        ], $this->notation->convert('sin 2'));
+    }
+
     public function testConvertComplex()
     {
         $this->assertEquals([
@@ -102,15 +110,16 @@ class PostfixNotationConverterTest extends Unit
             new NumToken(3, '4'),
             new NumToken(5, '2'),
             new MulToken(4),
-            new NumToken(8, '1'),
-            new NumToken(10, '5'),
-            new MinusToken(9),
-            new NumToken(13, '2'),
-            new NumToken(15, '3'),
-            new PowToken(14),
-            new PowToken(12),
+            new NumToken(11, '1'),
+            new NumToken(13, '5'),
+            new MinusToken(12),
+            new SinToken(7),
+            new NumToken(16, '2'),
+            new NumToken(18, '3'),
+            new PowToken(17),
+            new PowToken(15),
             new DivToken(6),
             new PlusToken(2),
-        ], $this->notation->convert('3+4*2/(1-5)^2^3'));
+        ], $this->notation->convert('3+4*2/sin(1-5)^2^3'));
     }
 }
