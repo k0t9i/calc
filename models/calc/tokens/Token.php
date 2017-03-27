@@ -129,6 +129,7 @@ abstract class Token
             self::registerTokenType(new LParToken(0));
             self::registerTokenType(new RParToken(0));
             self::registerTokenType(new SinToken(0));
+            self::registerTokenType(new CosToken(0));
         }
 
         return self::$tokenTypes;

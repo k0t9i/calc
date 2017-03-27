@@ -3,20 +3,20 @@
 namespace app\models\calc\tokens;
 
 /**
- * Class SinToken
+ * Class CosToken
  *
  * @package app\models\calc\tokens
  */
-class SinToken extends FuncToken
+class CosToken extends FuncToken
 {
-    const LEXEME = 'sin';
+    const LEXEME = 'cos';
 
     /**
      * @inheritdoc
      */
     protected function doGetValue(array $args)
     {
-        return sin($args[0]->getValue());
+        return cos($args[0]->getValue());
     }
 
     /**
@@ -24,7 +24,7 @@ class SinToken extends FuncToken
      */
     public function getLexemeRegExp()
     {
-        return '[sS][iI][nN]';
+        return '[cC][oO][sS]';
     }
 
     /**

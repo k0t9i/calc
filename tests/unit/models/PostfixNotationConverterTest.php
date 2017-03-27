@@ -4,6 +4,7 @@ namespace tests\models;
 
 use app\models\calc\PostfixNotationConverter;
 use app\models\calc\Tokenizer;
+use app\models\calc\tokens\CosToken;
 use app\models\calc\tokens\DivToken;
 use app\models\calc\tokens\MinusToken;
 use app\models\calc\tokens\MulToken;
@@ -101,6 +102,13 @@ class PostfixNotationConverterTest extends Unit
         $this->assertEquals([
             new NumToken(5, '2'), new SinToken(1)
         ], $this->notation->convert('sin 2'));
+    }
+
+    public function testConvertCosFunction()
+    {
+        $this->assertEquals([
+            new NumToken(5, '2'), new CosToken(1)
+        ], $this->notation->convert('cos 2'));
     }
 
     public function testConvertComplex()

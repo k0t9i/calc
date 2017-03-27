@@ -2,6 +2,7 @@
 
 namespace tests\models;
 
+use app\models\calc\tokens\CosToken;
 use app\models\calc\tokens\DivToken;
 use app\models\calc\tokens\LParToken;
 use app\models\calc\tokens\MinusToken;
@@ -141,6 +142,13 @@ class TokenizerTest extends Unit
         $this->assertEquals([
             new SinToken(1), new NumToken(5, '1')
         ], $this->tokenizer->tokenize('sin 1'));
+    }
+
+    public function testTokenizeCos()
+    {
+        $this->assertEquals([
+            new CosToken(1), new NumToken(5, '1')
+        ], $this->tokenizer->tokenize('cos 1'));
     }
 
     public function testTokenizeComplex()

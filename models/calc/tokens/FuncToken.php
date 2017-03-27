@@ -2,16 +2,14 @@
 
 namespace app\models\calc\tokens;
 
+/**
+ * Class FuncToken
+ * Base class for all functions
+ *
+ * @package app\models\calc\tokens
+ */
 abstract class FuncToken extends OperatorToken
 {
-    /**
-     * @inheritdoc
-     */
-    protected function doGetValue(array $args)
-    {
-        return sin($args[0]->getValue());
-    }
-
     /**
      * @inheritdoc
      */
@@ -27,7 +25,7 @@ abstract class FuncToken extends OperatorToken
     {
         return false;
     }
-    
+
     /**
      * @inheritdoc
      */
