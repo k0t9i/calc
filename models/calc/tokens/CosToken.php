@@ -22,14 +22,6 @@ class CosToken extends FuncToken
     /**
      * @inheritdoc
      */
-    public function getLexemeRegExp()
-    {
-        return '[cC][oO][sS]';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getLexeme()
     {
         return self::LEXEME;

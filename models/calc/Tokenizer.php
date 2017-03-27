@@ -55,14 +55,14 @@ class Tokenizer implements ITokenizer
      * Changes input string
      *
      * @param string $string Input string
-     * @param string $lexemeRegExp Lexeme regular expression
-     * @return bool|string Lexeme or false if lexeme not found
+     * @param Token $token Token for search
+     * @return bool|Token Lexeme or false if lexeme not found
      */
-    public function getFirstLexeme(&$string, $lexemeRegExp)
+    public function getFirstLexeme(&$string, Token $token)
     {
         $matches = [];
-        if (preg_match($lexemeRegExp, $string, $matches) && $matches[0]) {
-            $string = preg_replace($lexemeRegExp, '', $string, 1);
+        if ($token->isFirstLexemeMatched($string, $matches)) {
+            $string = $token->removeLexemeFromBeginning($string);
             return $matches[0];
         }
 
@@ -88,8 +88,8 @@ class Tokenizer implements ITokenizer
 
         $lengthBefore = strlen($string);
         $position = $initLength - $lengthBefore + 1;
-        foreach (Token::getTokenTypes() as $lexemeRegExp => $proto) {
-            $lexeme = $this->getFirstLexeme($string, $lexemeRegExp);
+        foreach (Token::getTokenTypes() as $proto) {
+            $lexeme = $this->getFirstLexeme($string, $proto);
             if ($lexeme !== false) {
                 return $proto->create($position, $lexeme);
             }

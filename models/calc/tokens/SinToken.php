@@ -22,14 +22,6 @@ class SinToken extends FuncToken
     /**
      * @inheritdoc
      */
-    public function getLexemeRegExp()
-    {
-        return '[sS][iI][nN]';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getLexeme()
     {
         return self::LEXEME;

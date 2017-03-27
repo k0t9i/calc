@@ -29,6 +29,6 @@ class SinTokenTest extends Unit
     public function testGetLexeme()
     {
         $token = new SinToken(0);
-        $this->assertTrue(preg_match($token->getLexemeFullRegExp(), $token->getLexeme()) == 1);
+        $this->assertTrue(preg_match($token->getLexemeFullRegExp(), $token->getLexeme() . ' ') == 1);
     }
 }

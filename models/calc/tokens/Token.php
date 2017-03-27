@@ -113,6 +113,29 @@ abstract class Token
     }
 
     /**
+     * Return true if Token matched first lexeme in expression, otherwise return false
+     *
+     * @param $expression
+     * @param array|null $matches
+     * @return bool
+     */
+    public function isFirstLexemeMatched($expression, array &$matches = null)
+    {
+        return preg_match($this->getLexemeFullRegExp(), $expression, $matches) && $matches[0];
+    }
+
+    /**
+     * Remove token lexeme from beginning of the expression
+     *
+     * @param $expression
+     * @return string
+     */
+    public function removeLexemeFromBeginning($expression)
+    {
+        return preg_replace($this->getLexemeFullRegExp(), '', $expression, 1);
+    }
+
+    /**
      * Register existing token types
      *
      * @return Token[]

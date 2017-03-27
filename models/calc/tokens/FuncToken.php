@@ -41,4 +41,28 @@ abstract class FuncToken extends OperatorToken
     {
         return self::ASSOCIATIVE_RIGHT;
     }
+
+    /**
+     * Lexeme regular expression for function Token
+     * After function token should be space or left parentheses
+     *
+     * @return string
+     */
+    public function getLexemeRegExp()
+    {
+        $regExp = '([' . implode('][', str_split($this->getLexeme())) . '])';
+        return $regExp . '([ \(])';
+    }
+
+    /**
+     * Remove token lexeme from beginning of the expression
+     * After function token should be space or left parentheses
+     *
+     * @param $expression
+     * @return mixed
+     */
+    public function removeLexemeFromBeginning($expression)
+    {
+        return preg_replace($this->getLexemeFullRegExp(), '$2', $expression, 1);
+    }
 }

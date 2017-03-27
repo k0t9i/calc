@@ -29,6 +29,6 @@ class CosTokenTest extends Unit
     public function testGetLexeme()
     {
         $token = new CosToken(0);
-        $this->assertTrue(preg_match($token->getLexemeFullRegExp(), $token->getLexeme()) == 1);
+        $this->assertTrue(preg_match($token->getLexemeFullRegExp(), $token->getLexeme() . ' ') == 1);
     }
 }
