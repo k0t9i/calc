@@ -1,17 +1,17 @@
 <?php
 
-namespace app\models;
+namespace app\models\calc;
 
-use app\models\tokens\OperatorToken;
-use app\models\tokens\LParToken;
-use app\models\tokens\NumToken;
-use app\models\tokens\RParToken;
-use app\models\tokens\Token;
+use app\models\calc\tokens\OperatorToken;
+use app\models\calc\tokens\LParToken;
+use app\models\calc\tokens\NumToken;
+use app\models\calc\tokens\RParToken;
+use app\models\calc\tokens\Token;
 
 /**
  * Class PostfixNotation
  *
- * @package app\models
+ * @package app\models\calc
  */
 class PostfixNotation
 {

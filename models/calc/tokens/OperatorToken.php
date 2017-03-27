@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models\tokens;
+namespace app\models\calc\tokens;
 
 /**
  * Class OperatorToken
  *
- * @package app\models\tokens
+ * @package app\models\calc\tokens
  */
 abstract class OperatorToken extends Token
 {

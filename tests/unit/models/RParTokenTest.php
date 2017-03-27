@@ -2,7 +2,7 @@
 
 namespace tests\models;
 
-use app\models\tokens\RParToken;
+use app\models\calc\tokens\RParToken;
 use Codeception\Test\Unit;
 
 class RParTokenTest extends Unit

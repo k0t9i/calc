@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models\tokens;
+namespace app\models\calc\tokens;
 
 /**
  * Minus token
  *
- * @package app\models\tokens
+ * @package app\models\calc\tokens
  */
 class MinusToken extends OperatorToken
 {

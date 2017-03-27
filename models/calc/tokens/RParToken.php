@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models\tokens;
+namespace app\models\calc\tokens;
 
 /**
- * Left parentheses token
+ * Right parentheses token
  *
- * @package app\models\tokens
+ * @package app\models\calc\tokens
  */
-class LParToken extends Token
+class RParToken extends Token
 {
-    const LEXEME = '(';
+    const LEXEME = ')';
 
     /**
      * @inheritdoc

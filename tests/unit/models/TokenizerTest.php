@@ -2,18 +2,18 @@
 
 namespace tests\models;
 
-use app\models\tokens\DivToken;
-use app\models\tokens\LParToken;
-use app\models\tokens\MinusToken;
-use app\models\tokens\MulToken;
-use app\models\tokens\NumToken;
-use app\models\tokens\OperatorToken;
-use app\models\tokens\PlusToken;
-use app\models\tokens\PowToken;
-use app\models\tokens\RParToken;
-use app\models\Tokenizer;
-use app\models\tokens\UnaryMinusToken;
-use app\models\UnknownLexemeException;
+use app\models\calc\tokens\DivToken;
+use app\models\calc\tokens\LParToken;
+use app\models\calc\tokens\MinusToken;
+use app\models\calc\tokens\MulToken;
+use app\models\calc\tokens\NumToken;
+use app\models\calc\tokens\OperatorToken;
+use app\models\calc\tokens\PlusToken;
+use app\models\calc\tokens\PowToken;
+use app\models\calc\tokens\RParToken;
+use app\models\calc\Tokenizer;
+use app\models\calc\tokens\UnaryMinusToken;
+use app\models\calc\UnknownLexemeException;
 use Codeception\Test\Unit;
 
 class TokenizerTest extends Unit

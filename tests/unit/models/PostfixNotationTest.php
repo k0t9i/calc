@@ -2,15 +2,14 @@
 
 namespace tests\models;
 
-use app\models\PostfixNotation;
-use app\models\Tokenizer;
-use app\models\tokens\DivToken;
-use app\models\tokens\LParToken;
-use app\models\tokens\MinusToken;
-use app\models\tokens\MulToken;
-use app\models\tokens\NumToken;
-use app\models\tokens\PlusToken;
-use app\models\tokens\PowToken;
+use app\models\calc\PostfixNotation;
+use app\models\calc\Tokenizer;
+use app\models\calc\tokens\DivToken;
+use app\models\calc\tokens\MinusToken;
+use app\models\calc\tokens\MulToken;
+use app\models\calc\tokens\NumToken;
+use app\models\calc\tokens\PlusToken;
+use app\models\calc\tokens\PowToken;
 use Codeception\Test\Unit;
 
 class PostfixNotationTest extends Unit

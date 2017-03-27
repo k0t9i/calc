@@ -2,10 +2,10 @@
 
 namespace tests\models;
 
-use app\models\CalculateSyntaxException;
-use app\models\PostfixNotation;
-use app\models\PostfixNotationCalculator;
-use app\models\Tokenizer;
+use app\models\calc\CalculateSyntaxException;
+use app\models\calc\PostfixNotation;
+use app\models\calc\PostfixNotationCalculator;
+use app\models\calc\Tokenizer;
 use Codeception\Test\Unit;
 
 class PostfixNotationCalculatorTest extends Unit

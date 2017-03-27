@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models\tokens;
+namespace app\models\calc\tokens;
 
 /**
  * Unary minus token
  *
- * @package app\models\tokens
+ * @package app\models\calc\tokens
  */
 class UnaryMinusToken extends MinusToken
 {

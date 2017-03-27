@@ -2,8 +2,8 @@
 
 namespace tests\models;
 
-use app\models\tokens\NumToken;
-use app\models\tokens\PowToken;
+use app\models\calc\tokens\NumToken;
+use app\models\calc\tokens\PowToken;
 use Codeception\Test\Unit;
 
 class PowTokenTest extends Unit

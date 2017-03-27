@@ -1,21 +1,22 @@
 <?php
 
-namespace app\models\tokens;
+namespace app\models\calc\tokens;
 
 /**
- * Number token
+ * Left parentheses token
  *
- * @package app\models\tokens
+ * @package app\models\calc\tokens
  */
-class NumToken extends Token
+class LParToken extends Token
 {
+    const LEXEME = '(';
 
     /**
      * @inheritdoc
      */
     protected function doGetValue(array $args)
     {
-        return $this->value;
+        return null;
     }
 
     /**
@@ -31,7 +32,7 @@ class NumToken extends Token
      */
     protected function requireValue()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -39,6 +40,14 @@ class NumToken extends Token
      */
     public function getLexemeRegExp()
     {
-        return '[0-9]+(\.?[0-9]+)|([0-9]*)';
+        return '\\' . $this->getLexeme();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLexeme()
+    {
+        return self::LEXEME;
     }
 }

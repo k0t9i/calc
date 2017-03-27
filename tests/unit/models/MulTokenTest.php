@@ -2,8 +2,8 @@
 
 namespace tests\models;
 
-use app\models\tokens\MulToken;
-use app\models\tokens\NumToken;
+use app\models\calc\tokens\MulToken;
+use app\models\calc\tokens\NumToken;
 use Codeception\Test\Unit;
 
 class MulTokenTest extends Unit

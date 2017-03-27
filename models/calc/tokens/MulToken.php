@@ -1,22 +1,22 @@
 <?php
 
-namespace app\models\tokens;
+namespace app\models\calc\tokens;
 
 /**
- * Plus token
+ * Multiply token
  *
- * @package app\models\tokens
+ * @package app\models\calc\tokens
  */
-class PlusToken extends OperatorToken
+class MulToken extends OperatorToken
 {
-    const LEXEME = '+';
+    const LEXEME = '*';
 
     /**
      * @inheritdoc
      */
     protected function doGetValue(array $args)
     {
-        return $args[0]->getValue() + $args[1]->getValue();
+        return $args[0]->getValue() * $args[1]->getValue();
     }
 
     /**
@@ -38,17 +38,9 @@ class PlusToken extends OperatorToken
     /**
      * @inheritdoc
      */
-    public function getLexemeRegExp()
-    {
-        return '\\' . $this->getLexeme();
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getPrecedence()
     {
-        return self::PRECEDENCE_LOWEST;
+        return self::PRECEDENCE_LOW;
     }
 
     /**
@@ -57,6 +49,14 @@ class PlusToken extends OperatorToken
     public function getAssociativity()
     {
         return self::ASSOCIATIVE_LEFT;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLexemeRegExp()
+    {
+        return '\\' . $this->getLexeme();
     }
 
     /**

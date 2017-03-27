@@ -1,22 +1,22 @@
 <?php
 
-namespace app\models\tokens;
+namespace app\models\calc\tokens;
 
 /**
- * Power token
+ * Plus token
  *
- * @package app\models\tokens
+ * @package app\models\calc\tokens
  */
-class PowToken extends OperatorToken
+class PlusToken extends OperatorToken
 {
-    const LEXEME = '^';
+    const LEXEME = '+';
 
     /**
      * @inheritdoc
      */
     protected function doGetValue(array $args)
     {
-        return pow($args[0]->getValue(), $args[1]->getValue());
+        return $args[0]->getValue() + $args[1]->getValue();
     }
 
     /**
@@ -38,9 +38,17 @@ class PowToken extends OperatorToken
     /**
      * @inheritdoc
      */
+    public function getLexemeRegExp()
+    {
+        return '\\' . $this->getLexeme();
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getPrecedence()
     {
-        return self::PRECEDENCE_AVERAGE;
+        return self::PRECEDENCE_LOWEST;
     }
 
     /**
@@ -48,15 +56,7 @@ class PowToken extends OperatorToken
      */
     public function getAssociativity()
     {
-        return self::ASSOCIATIVE_RIGHT;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getLexemeRegExp()
-    {
-        return '\\' . $this->getLexeme();
+        return self::ASSOCIATIVE_LEFT;
     }
 
     /**

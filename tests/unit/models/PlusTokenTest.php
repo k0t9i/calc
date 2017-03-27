@@ -2,8 +2,8 @@
 
 namespace tests\models;
 
-use app\models\tokens\NumToken;
-use app\models\tokens\PlusToken;
+use app\models\calc\tokens\NumToken;
+use app\models\calc\tokens\PlusToken;
 use Codeception\Test\Unit;
 
 class PlusTokenTest extends Unit

@@ -1,22 +1,22 @@
 <?php
 
-namespace app\models\tokens;
+namespace app\models\calc\tokens;
 
 /**
- * Multiply token
+ * Power token
  *
- * @package app\models\tokens
+ * @package app\models\calc\tokens
  */
-class MulToken extends OperatorToken
+class PowToken extends OperatorToken
 {
-    const LEXEME = '*';
+    const LEXEME = '^';
 
     /**
      * @inheritdoc
      */
     protected function doGetValue(array $args)
     {
-        return $args[0]->getValue() * $args[1]->getValue();
+        return pow($args[0]->getValue(), $args[1]->getValue());
     }
 
     /**
@@ -40,7 +40,7 @@ class MulToken extends OperatorToken
      */
     public function getPrecedence()
     {
-        return self::PRECEDENCE_LOW;
+        return self::PRECEDENCE_AVERAGE;
     }
 
     /**
@@ -48,7 +48,7 @@ class MulToken extends OperatorToken
      */
     public function getAssociativity()
     {
-        return self::ASSOCIATIVE_LEFT;
+        return self::ASSOCIATIVE_RIGHT;
     }
 
     /**

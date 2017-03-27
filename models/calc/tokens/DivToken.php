@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models\tokens;
+namespace app\models\calc\tokens;
 
 /**
  * Divide token
  *
- * @package app\models\tokens
+ * @package app\models\calc\tokens
  */
 class DivToken extends OperatorToken
 {

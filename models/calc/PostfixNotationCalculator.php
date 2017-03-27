@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace app\models\calc;
 
-use app\models\tokens\NumToken;
-use app\models\tokens\OperatorToken;
-use app\models\tokens\Token;
+use app\models\calc\tokens\NumToken;
+use app\models\calc\tokens\OperatorToken;
+use app\models\calc\tokens\Token;
 
 /**
  * Class PostfixNotationCalculator
  *
- * @package app\models
+ * @package app\models\calc
  */
 class PostfixNotationCalculator
 {

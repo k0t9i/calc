@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models;
+namespace app\models\calc;
 
 /**
  * Class UnknownLexemeException
  *
- * @package app\models
+ * @package app\models\calc
  */
 class UnknownLexemeException extends \Exception
 {

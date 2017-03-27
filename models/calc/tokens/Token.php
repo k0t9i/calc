@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models\tokens;
+namespace app\models\calc\tokens;
 
 /**
  * Parent class for all tokens
  *
- * @package app\models
+ * @package app\models\calc\tokens
  */
 abstract class Token
 {

@@ -2,8 +2,8 @@
 
 namespace tests\models;
 
-use app\models\tokens\DivToken;
-use app\models\tokens\NumToken;
+use app\models\calc\tokens\DivToken;
+use app\models\calc\tokens\NumToken;
 use Codeception\Test\Unit;
 
 class DivTokenTest extends Unit

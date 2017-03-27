@@ -1,17 +1,17 @@
 <?php
 
-namespace app\models;
+namespace app\models\calc;
 
-use app\models\tokens\LParToken;
-use app\models\tokens\OperatorToken;
-use app\models\tokens\Token;
+use app\models\calc\tokens\LParToken;
+use app\models\calc\tokens\OperatorToken;
+use app\models\calc\tokens\Token;
 
 /**
  * Class Tokenizer
  *
  * Tokenize input string
  *
- * @package app\models
+ * @package app\models\calc
  */
 class Tokenizer
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models;
+namespace app\models\calc;
 
 /**
  * Class CalculateSyntaxException
  *
- * @package app\models
+ * @package app\models\calc
  */
 class CalculateSyntaxException extends \Exception
 {
