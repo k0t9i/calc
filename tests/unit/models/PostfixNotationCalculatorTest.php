@@ -94,12 +94,12 @@ class PostfixNotationCalculatorTest extends Unit
 
     public function testCalculateSin()
     {
-        $this->assertEquals(3, $this->calculator->calculate('sin ' . pi() / 2 . '^3+2'));
+        $this->assertEquals(3, $this->calculator->calculate('sin (PI/2)^3+2'));
     }
 
     public function testCalculateCos()
     {
-        $this->assertEquals(2, $this->calculator->calculate('cos ' . pi() / 2 . '^3+2'), 0.000001);
+        $this->assertEquals(2, $this->calculator->calculate('cos (PI/2)^3+2'), 0.000001);
     }
 
     public function testCalculateComplex()

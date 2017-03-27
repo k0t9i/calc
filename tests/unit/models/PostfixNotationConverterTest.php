@@ -9,6 +9,7 @@ use app\models\calc\tokens\DivToken;
 use app\models\calc\tokens\MinusToken;
 use app\models\calc\tokens\MulToken;
 use app\models\calc\tokens\NumToken;
+use app\models\calc\tokens\PiToken;
 use app\models\calc\tokens\PlusToken;
 use app\models\calc\tokens\PowToken;
 use app\models\calc\tokens\SinToken;
@@ -109,6 +110,13 @@ class PostfixNotationConverterTest extends Unit
         $this->assertEquals([
             new NumToken(5, '2'), new CosToken(1)
         ], $this->notation->convert('cos 2'));
+    }
+
+    public function testConvertPiConst()
+    {
+        $this->assertEquals([
+            new PiToken(5), new CosToken(1)
+        ], $this->notation->convert('cos PI'));
     }
 
     public function testConvertComplex()

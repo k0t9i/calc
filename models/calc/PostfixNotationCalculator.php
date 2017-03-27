@@ -4,6 +4,7 @@ namespace app\models\calc;
 
 use app\models\calc\interfaces\ICalculator;
 use app\models\calc\interfaces\IConverter;
+use app\models\calc\tokens\ConstToken;
 use app\models\calc\tokens\NumToken;
 use app\models\calc\tokens\OperatorToken;
 
@@ -47,7 +48,7 @@ class PostfixNotationCalculator implements ICalculator
 
         while (count($tokens) > 0) {
             $current = array_shift($tokens);
-            if ($current instanceof NumToken) {
+            if ($current instanceof ConstToken) {
                 $stack->push($current);
             } elseif ($current instanceof OperatorToken) {
                 $args = [];

@@ -3,19 +3,20 @@
 namespace app\models\calc\tokens;
 
 /**
- * Number token
+ * Class PiToken
  *
  * @package app\models\calc\tokens
  */
-class NumToken extends ConstToken
+class PiToken extends ConstToken
 {
+    const LEXEME = 'PI';
 
     /**
      * @inheritdoc
      */
     protected function doGetValue(array $args)
     {
-        return $this->value;
+        return pi();
     }
 
     /**
@@ -31,7 +32,7 @@ class NumToken extends ConstToken
      */
     protected function requireValue()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -39,6 +40,14 @@ class NumToken extends ConstToken
      */
     public function getLexemeRegExp()
     {
-        return '[0-9]+(\.?[0-9]+)|([0-9]*)';
+        return '[P][I]';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLexeme()
+    {
+        return self::LEXEME;
     }
 }

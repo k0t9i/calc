@@ -48,7 +48,7 @@ abstract class Token
     /**
      * Call child method doGetValue
      *
-     * @param NumToken[] $args Token arguments for getting value
+     * @param ConstToken[] $args Token arguments for getting value
      * @return string
      */
     public function getValue(array $args = [])
@@ -121,6 +121,7 @@ abstract class Token
     {
         if (!self::$tokenTypes) {
             self::registerTokenType(new NumToken(0, 0));
+            self::registerTokenType(new PiToken(0));
             self::registerTokenType(new PlusToken(0));
             self::registerTokenType(new MinusToken(0));
             self::registerTokenType(new MulToken(0));
@@ -148,7 +149,7 @@ abstract class Token
     /**
      * Return concrete token value
      *
-     * @param NumToken[] $args
+     * @param ConstToken[] $args
      * @return mixed
      */
     abstract protected function doGetValue(array $args);

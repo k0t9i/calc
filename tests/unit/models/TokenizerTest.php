@@ -9,6 +9,7 @@ use app\models\calc\tokens\MinusToken;
 use app\models\calc\tokens\MulToken;
 use app\models\calc\tokens\NumToken;
 use app\models\calc\tokens\OperatorToken;
+use app\models\calc\tokens\PiToken;
 use app\models\calc\tokens\PlusToken;
 use app\models\calc\tokens\PowToken;
 use app\models\calc\tokens\RParToken;
@@ -149,6 +150,13 @@ class TokenizerTest extends Unit
         $this->assertEquals([
             new CosToken(1), new NumToken(5, '1')
         ], $this->tokenizer->tokenize('cos 1'));
+    }
+
+    public function testTokenizePi()
+    {
+        $this->assertEquals([
+            new SinToken(1), new PiToken(5)
+        ], $this->tokenizer->tokenize('sin PI'));
     }
 
     public function testTokenizeComplex()
