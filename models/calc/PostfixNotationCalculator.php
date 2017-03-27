@@ -2,26 +2,46 @@
 
 namespace app\models\calc;
 
+use app\models\calc\interfaces\ICalculator;
+use app\models\calc\interfaces\IConverter;
 use app\models\calc\tokens\NumToken;
 use app\models\calc\tokens\OperatorToken;
-use app\models\calc\tokens\Token;
 
 /**
  * Class PostfixNotationCalculator
  *
  * @package app\models\calc
  */
-class PostfixNotationCalculator
+class PostfixNotationCalculator implements ICalculator
 {
     /**
-     * Calculate expression in postfix notation
+     * Converter object
      *
-     * @param Token[] $tokens List of tokens in postfix notation
+     * @var IConverter
+     */
+    private $converter;
+
+    /**
+     * PostfixNotationCalculator constructor.
+     *
+     * @param IConverter $converter
+     */
+    public function __construct(IConverter $converter)
+    {
+        $this->converter = $converter;
+    }
+
+    /**
+     * Calculate expression
+     *
+     * @param string $expression
      * @return float Result of expression
      * @throws CalculateSyntaxException If expression has syntax error
      */
-    public function calculate(array $tokens)
+    public function calculate($expression)
     {
+        $tokens = $this->converter->convert($expression);
+
         $result = 0;
         $stack = new \SplStack();
 

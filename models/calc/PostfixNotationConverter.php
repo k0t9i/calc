@@ -2,6 +2,8 @@
 
 namespace app\models\calc;
 
+use app\models\calc\interfaces\IConverter;
+use app\models\calc\interfaces\ITokenizer;
 use app\models\calc\tokens\OperatorToken;
 use app\models\calc\tokens\LParToken;
 use app\models\calc\tokens\NumToken;
@@ -13,17 +15,36 @@ use app\models\calc\tokens\Token;
  *
  * @package app\models\calc
  */
-class PostfixNotationConverter
+class PostfixNotationConverter implements IConverter
 {
     /**
-     * Convert array of tokens in infix notation to array of tokens in postfix notation with Shunting-yard algorithm
+     * Tokenizer object
      *
-     * @param Token[] $tokens
+     * @var ITokenizer
+     */
+    private $tokenizer;
+
+    /**
+     * PostfixNotationConverter constructor.
+     *
+     * @param ITokenizer $tokenizer
+     */
+    public function __construct(ITokenizer $tokenizer)
+    {
+        $this->tokenizer = $tokenizer;
+    }
+
+    /**
+     * Convert expression in infix notation to array of tokens in postfix notation with Shunting-yard algorithm
+     *
+     * @param string $expression
      * @return Token[]
      * @throws \Exception If not found left parentheses in stack
      */
-    public function convert(array $tokens)
+    public function convert($expression)
     {
+        $tokens = $this->tokenizer->tokenize($expression);
+
         $stack = new \SplStack();
         $output = [];
 

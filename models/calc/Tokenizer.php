@@ -2,6 +2,7 @@
 
 namespace app\models\calc;
 
+use app\models\calc\interfaces\ITokenizer;
 use app\models\calc\tokens\LParToken;
 use app\models\calc\tokens\OperatorToken;
 use app\models\calc\tokens\Token;
@@ -13,17 +14,17 @@ use app\models\calc\tokens\Token;
  *
  * @package app\models\calc
  */
-class Tokenizer
+class Tokenizer implements ITokenizer
 {
     /**
-     * Parse input string into list of tokens
+     * Parse expression into list of tokens
      *
-     * @param string $string Input string
+     * @param string $expression Input string
      * @return Token[] List of tokens from input string
      */
-    public function tokenize($string)
+    public function tokenize($expression)
     {
-        $input = $string;
+        $input = $expression;
         $result = [];
 
         $initLength = strlen($input);
