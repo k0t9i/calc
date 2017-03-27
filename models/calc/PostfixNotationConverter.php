@@ -52,20 +52,7 @@ class PostfixNotationConverter implements IConverter
 
         while (count($tokens) > 0) {
             $current = array_shift($tokens);
-            if ($current instanceof ConstToken) {
-                $output[] = $current;
-            } elseif ($current instanceof FuncToken) {
-                $stack->push($current);
-            } elseif ($current instanceof LParToken) {
-                $stack->push($current);
-            } elseif ($current instanceof RParToken) {
-                if ($stack->count() == 0){
-                    throw new ConvertException('Mismatched right parentheses at position ' . $current->getPosition());
-                }
-                $this->popTokensWhileNotFoundLeftParentheses($stack, $output);
-            } elseif ($current instanceof OperatorToken) {
-                $this->popTokensWhileOperatorGoBeforeCurrent($stack, $current, $output);
-            }
+            $this->processToken($stack, $current, $output);
         }
 
         while ($stack->count() > 0) {
@@ -77,6 +64,33 @@ class PostfixNotationConverter implements IConverter
         }
 
         return $output;
+    }
+
+    /**
+     * Process current token
+     * Change $output
+     *
+     * @param \SplStack $stack Stack of operators
+     * @param Token $token Current token
+     * @param Token[] $output Output array of tokens
+     * @throws ConvertException If parentheses mismatched
+     */
+    private function processToken(\SplStack $stack, $token, &$output)
+    {
+        if ($token instanceof ConstToken) {
+            $output[] = $token;
+        } elseif ($token instanceof FuncToken) {
+            $stack->push($token);
+        } elseif ($token instanceof LParToken) {
+            $stack->push($token);
+        } elseif ($token instanceof RParToken) {
+            if ($stack->count() == 0){
+                throw new ConvertException('Mismatched right parentheses at position ' . $token->getPosition());
+            }
+            $this->popTokensWhileNotFoundLeftParentheses($stack, $output);
+        } elseif ($token instanceof OperatorToken) {
+            $this->popTokensWhileOperatorGoBeforeCurrent($stack, $token, $output);
+        }
     }
 
     /**
