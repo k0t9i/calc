@@ -59,6 +59,9 @@ class PostfixNotationConverter implements IConverter
             } elseif ($current instanceof LParToken) {
                 $stack->push($current);
             } elseif ($current instanceof RParToken) {
+                if ($stack->count() == 0){
+                    throw new ConvertException('Mismatched right parentheses at position ' . $current->getPosition());
+                }
                 $this->popTokensWhileNotFoundLeftParentheses($stack, $output);
             } elseif ($current instanceof OperatorToken) {
                 $this->popTokensWhileOperatorGoBeforeCurrent($stack, $current, $output);
@@ -68,7 +71,7 @@ class PostfixNotationConverter implements IConverter
         while ($stack->count() > 0) {
             $current = $stack->pop();
             if (!($current instanceof OperatorToken)) {
-                throw new \Exception('Excess parentheses at position ' . $current->getPosition());
+                throw new ConvertException('Mismatched parentheses at position ' . $current->getPosition());
             }
             $output[] = $current;
         }
@@ -112,7 +115,7 @@ class PostfixNotationConverter implements IConverter
         }
 
         if (!($result instanceof LParToken)) {
-            throw new \Exception();
+            throw new ConvertException('Mismatched left parentheses');
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace tests\models;
 
+use app\models\calc\ConvertException;
 use app\models\calc\PostfixNotationConverter;
 use app\models\calc\Tokenizer;
 use app\models\calc\tokens\CosToken;
@@ -72,16 +73,28 @@ class PostfixNotationConverterTest extends Unit
         ], $this->notation->convert('(2+3-1)'));
     }
 
-    public function testConvertMissingRightParentheses()
+    public function testConvertMismatchedRightParentheses()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(ConvertException::class);
         $this->notation->convert('2+3)*1');
     }
 
     public function testConvertMissingLeftParentheses()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(ConvertException::class);
         $this->notation->convert('2+(3*1');
+    }
+
+    public function testConvertMismatchedLeftParenthesesPosition3()
+    {
+        $this->expectExceptionMessage('position 3');
+        $this->notation->convert('2+(3*1');
+    }
+
+    public function testConvertMismatchedLeftParenthesesPosition5()
+    {
+        $this->expectExceptionMessage('position 5');
+        $this->notation->convert('2+33(3*1');
     }
 
     public function testConvertTwoOperatorWithDifferentPrecedence()
@@ -137,5 +150,24 @@ class PostfixNotationConverterTest extends Unit
             new DivToken(6),
             new PlusToken(2),
         ], $this->notation->convert('3+4*2/sin(1-5)^2^3'));
+    }
+
+
+    public function testConvertRightParenthesesBeforeAnyOperator()
+    {
+        $this->expectException(ConvertException::class);
+        $this->notation->convert('123)+2');
+    }
+
+    public function testConvertMismatchedRightParenthesesPosition4()
+    {
+        $this->expectExceptionMessage('position 4');
+        $this->notation->convert('123)+2');
+    }
+
+    public function testConvertMismatchedRightParenthesesPosition5()
+    {
+        $this->expectExceptionMessage('position 5');
+        $this->notation->convert('123 )+2');
     }
 }
