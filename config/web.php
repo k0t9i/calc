@@ -1,5 +1,15 @@
 <?php
 
+Yii::$container->set('app\models\calc\interfaces\ICalculator', [
+    'class' => 'app\models\calc\PostfixNotationCalculator'
+]);
+Yii::$container->set('app\models\calc\interfaces\IConverter', [
+    'class' => 'app\models\calc\PostfixNotationConverter'
+]);
+Yii::$container->set('app\models\calc\interfaces\ITokenizer', [
+    'class' => 'app\models\calc\Tokenizer'
+]);
+
 $params = require(__DIR__ . '/params.php');
 
 $config = [
@@ -10,7 +20,6 @@ $config = [
     'components' => [
         'user' => [],
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'YbSVf1V9sDjb2Lu4a8vwlUp_qAeT1g9-',
         ],
         'cache' => [
@@ -32,6 +41,9 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
+        'calc' => [
+            'class' => 'app\components\Calculator'
+        ]
     ],
     'params' => $params,
 ];
