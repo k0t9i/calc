@@ -2,6 +2,11 @@
 
 namespace app\models\tokens;
 
+/**
+ * Unary minus token
+ *
+ * @package app\models\tokens
+ */
 class UnaryMinusToken extends MinusToken
 {
     /**
