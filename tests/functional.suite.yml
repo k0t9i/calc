@@ -11,3 +11,6 @@ modules:
     enabled:
       - Filesystem
       - Yii2
+      - REST:
+          depends: Yii2
+          url: /v1/

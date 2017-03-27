@@ -45,6 +45,11 @@ $config = [
             'class' => 'app\components\Calculator'
         ]
     ],
+    'modules' => [
+        'v1' => [
+            'class' => 'app\modules\v1\Module',
+        ],
+    ],
     'params' => $params,
 ];
 if (YII_ENV_DEV) {
