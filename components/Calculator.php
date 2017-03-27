@@ -7,7 +7,7 @@ use yii\base\Component;
 
 /**
  * Class Calculator
- * 
+ *
  * @package app\components
  */
 class Calculator extends Component
