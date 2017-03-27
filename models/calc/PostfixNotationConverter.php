@@ -84,7 +84,7 @@ class PostfixNotationConverter implements IConverter
         } elseif ($token instanceof LParToken) {
             $stack->push($token);
         } elseif ($token instanceof RParToken) {
-            if ($stack->count() == 0){
+            if ($stack->count() == 0) {
                 throw new ConvertException('Mismatched right parentheses at position ' . $token->getPosition());
             }
             $this->popTokensWhileNotFoundLeftParentheses($stack, $output);
