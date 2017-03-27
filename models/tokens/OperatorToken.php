@@ -56,6 +56,14 @@ abstract class OperatorToken extends Token
     }
 
     /**
+     * @return null|OperatorToken Unary version of this operator if possible, null otherwise
+     */
+    public function getUnaryVersion()
+    {
+        return null;
+    }
+
+    /**
      * Operator precedence
      *
      * @return integer

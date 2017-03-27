@@ -112,14 +112,6 @@ class PostfixNotationCalculatorTest extends Unit
         $this->assertEquals(9, $this->calculator->calculate($postfix));
     }
 
-    public function testCalculateComplex()
-    {
-        $infix = $this->tokenizer->tokenize('3+4*2/(1-5)^2^3');
-        $postfix = $this->notation->convert($infix);
-
-        $this->assertEquals(3.0001220703125, $this->calculator->calculate($postfix));
-    }
-
     public function testCalculateNotEnoughArgs()
     {
         $this->expectException(CalculateSyntaxException::class);
@@ -134,5 +126,29 @@ class PostfixNotationCalculatorTest extends Unit
         $infix = $this->tokenizer->tokenize('3+2 3+2');
         $postfix = $this->notation->convert($infix);
         $this->calculator->calculate($postfix);
+    }
+
+    public function testCalculateUnaryMinusAtBeginOfExpression()
+    {
+        $infix = $this->tokenizer->tokenize('-2*3');
+        $postfix = $this->notation->convert($infix);
+
+        $this->assertEquals(-6, $this->calculator->calculate($postfix));
+    }
+
+    public function testCalculateUnaryMinusAfterLeftParentheses()
+    {
+        $infix = $this->tokenizer->tokenize('5*(-2)');
+        $postfix = $this->notation->convert($infix);
+
+        $this->assertEquals(-10, $this->calculator->calculate($postfix));
+    }
+
+    public function testCalculateComplex()
+    {
+        $infix = $this->tokenizer->tokenize('-3+4*(-2)/(1-5)^2^3');
+        $postfix = $this->notation->convert($infix);
+
+        $this->assertEquals(-3.0001220703125, $this->calculator->calculate($postfix));
     }
 }

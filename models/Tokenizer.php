@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\models\tokens\LParToken;
+use app\models\tokens\OperatorToken;
 use app\models\tokens\Token;
 
 /**
@@ -25,12 +27,23 @@ class Tokenizer
         $result = [];
 
         $initLength = strlen($input);
+        $prevToken = null;
         while (strlen($input) > 0) {
             $token = $this->searchTokens($input, $initLength);
             if ($token === false) {
                 break;
             }
+
+            // If previous token is left parentheses or current token first token of expression
+            // then try get unary version of current operator
+            if ((is_null($prevToken) || $prevToken instanceof LParToken) && $token instanceof OperatorToken) {
+                if (!is_null($unary = $token->getUnaryVersion())) {
+                    $token = $unary;
+                }
+            }
+
             $result[] = $token;
+            $prevToken = $token;
         }
 
         return $result;

@@ -7,10 +7,12 @@ use app\models\tokens\LParToken;
 use app\models\tokens\MinusToken;
 use app\models\tokens\MulToken;
 use app\models\tokens\NumToken;
+use app\models\tokens\OperatorToken;
 use app\models\tokens\PlusToken;
 use app\models\tokens\PowToken;
 use app\models\tokens\RParToken;
 use app\models\Tokenizer;
+use app\models\tokens\UnaryMinusToken;
 use app\models\UnknownLexemeException;
 use Codeception\Test\Unit;
 
@@ -98,7 +100,7 @@ class TokenizerTest extends Unit
 
     public function testTokenizeMinus()
     {
-        $this->assertEquals([new MinusToken(1)], $this->tokenizer->tokenize('-'));
+        $this->assertEquals([new NumToken(1, '1'), new MinusToken(2)], $this->tokenizer->tokenize('1-'));
     }
 
     public function testTokenizeMultiply()
@@ -154,4 +156,19 @@ class TokenizerTest extends Unit
         ], $this->tokenizer->tokenize('12-(    (2  +339)  /7) *      47560^98321'));
     }
 
+    public function testTokenizeFirstMinusInExpressionIsUnaryOperator()
+    {
+        $tokens = $this->tokenizer->tokenize('    -12');
+        /** @var OperatorToken $minus */
+        $minus = $tokens[0];
+        $this->assertTrue($minus instanceof UnaryMinusToken);
+    }
+
+    public function testTokenizeFirstMinusAfterLeftParenthesesIsUnaryOperator()
+    {
+        $tokens = $this->tokenizer->tokenize('1+(   -12)');
+        /** @var OperatorToken $minus */
+        $minus = $tokens[3];
+        $this->assertTrue($minus instanceof UnaryMinusToken);
+    }
 }

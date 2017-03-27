@@ -66,4 +66,12 @@ class MinusToken extends OperatorToken
     {
         return self::LEXEME;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUnaryVersion()
+    {
+        return new UnaryMinusToken($this->getPosition());
+    }
 }

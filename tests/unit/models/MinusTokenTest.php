@@ -4,6 +4,9 @@ namespace tests\models;
 
 use app\models\tokens\MinusToken;
 use app\models\tokens\NumToken;
+use app\models\tokens\OperatorToken;
+use app\models\tokens\PowToken;
+use app\models\tokens\UnaryMinusToken;
 use Codeception\Test\Unit;
 
 class MinusTokenTest extends Unit
@@ -30,5 +33,13 @@ class MinusTokenTest extends Unit
     {
         $token = new MinusToken(0);
         $this->assertTrue(preg_match($token->getLexemeFullRegExp(), $token->getLexeme()) == 1);
+    }
+
+    public function testExistsUnaryVersionOfMinus()
+    {
+        $minus = new MinusToken(0);
+        $unary = $minus->getUnaryVersion();
+
+        $this->assertTrue($unary instanceof UnaryMinusToken);
     }
 }
