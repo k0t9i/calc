@@ -48,7 +48,7 @@ class PlusToken extends OperatorToken
      */
     public function getPrecedence()
     {
-        return 1;
+        return self::PRECEDENCE_LOWEST;
     }
 
     /**

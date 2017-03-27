@@ -40,7 +40,7 @@ class PowToken extends OperatorToken
      */
     public function getPrecedence()
     {
-        return 3;
+        return self::PRECEDENCE_AVERAGE;
     }
 
     /**

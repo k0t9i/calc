@@ -40,7 +40,7 @@ class DivToken extends OperatorToken
      */
     public function getPrecedence()
     {
-        return 2;
+        return self::PRECEDENCE_LOW;
     }
 
     /**

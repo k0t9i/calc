@@ -12,6 +12,12 @@ abstract class OperatorToken extends Token
     const ASSOCIATIVE_LEFT = 'associativeLeft';
     const ASSOCIATIVE_RIGHT = 'associativeRight';
 
+    const PRECEDENCE_LOWEST = 0;
+    const PRECEDENCE_LOW = 1;
+    const PRECEDENCE_AVERAGE = 2;
+    const PRECEDENCE_HIGH = 3;
+    const PRECEDENCE_HIGHEST = 4;
+
     /**
      * Compare operators precedence
      *
@@ -50,7 +56,7 @@ abstract class OperatorToken extends Token
     }
 
     /**
-     * Operator precendence
+     * Operator precedence
      *
      * @return integer
      */
