@@ -213,4 +213,9 @@ class TokenizerTest extends Unit
         $minus = $tokens[3];
         $this->assertTrue($minus instanceof UnaryMinusToken);
     }
+
+    public function testTokenizeSingleZero()
+    {
+        $this->assertEquals([new NumToken(1, '0')], $this->tokenizer->tokenize('0'));
+    }
 }

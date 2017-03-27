@@ -121,7 +121,8 @@ abstract class Token
      */
     public function isFirstLexemeMatched($expression, array &$matches = null)
     {
-        return preg_match($this->getLexemeFullRegExp(), $expression, $matches) && $matches[0];
+        return preg_match($this->getLexemeFullRegExp(), $expression, $matches) &&
+            $matches[0] !== '';
     }
 
     /**
