@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use yii\filters\ContentNegotiator;
+use yii\filters\Cors;
 use yii\filters\VerbFilter;
 use yii\rest\Controller;
 use yii\web\Response;
@@ -20,6 +21,7 @@ class CalcController extends Controller
      */
     public function behaviors()
     {
+
         return [
             'contentNegotiator' => [
                 'class' => ContentNegotiator::className(),
@@ -31,6 +33,14 @@ class CalcController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'calc' => ['get']
+                ],
+            ],
+            'corsFilter' => [
+                'class' => Cors::className(),
+                'cors' => [
+                    'Origin' => ['*'],
+                    'Access-Control-Request-Headers' => ['*'],
+                    'Access-Control-Request-Method' => ['GET']
                 ],
             ]
         ];
